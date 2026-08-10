@@ -7,6 +7,13 @@ on:
     paths:
       - '.github/workflows/font-assets.yml'
       - 'meta/standards/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/font-assets.yml'
+      - 'meta/standards/**'
+      - 'meta/prompts/MASTER_PDF_PROMPT.md'
   workflow_dispatch:
 
 jobs:
