@@ -11,25 +11,32 @@ font:
   family: Vazirmatn
   pinned_release: v33.003
   embedded: true
-page_clearance:
-  required_minimum_mm: 20.00
-  css_margin_mm:
+page_layout:
+  content_css_margin_mm:
     top: 22
     right: 22
     bottom: 24
     left: 22
-  measured_minimum_mm:
-    left: 20.74
-    right: 22.14
-    top: 22.47
-    bottom: 25.42
+  decorative_frame_inset_mm: 5
+  required_minimum_content_to_paper_edge_mm: 20.00
+  required_minimum_content_to_frame_gap_mm: 14.00
+  measured_minimum_content_to_paper_edge_mm:
+    left: 20.55
+    right: 21.94
+    top: 22.28
+    bottom: 24.58
+  measured_minimum_content_to_frame_gap_mm:
+    left: 15.55
+    right: 16.94
+    top: 17.28
+    bottom: 19.58
 visual_qa:
   status: PASS
   date: 2026-08-11
   full_page_render_dpi: 180
   pages_reviewed: 98
-  candidate_run_id: 31458028545
-  review_basis: all 98 pages of the exact final CI candidate were rendered and visually reviewed; cover and coverage table were also checked at full-page size
+  candidate_run_id: 31460189926
+  review_basis: all 98 pages of the exact CI candidate were rendered and visually reviewed; all TOC pages were checked directly at full size; frame presence was also checked on every rendered page
 source_sha256: 14d20dd1628e201df650627cc9005f3b00071856806eeb3b536f5fbe6e9cc737
-pdf_sha256: 64696d235c43e6085effb5f0a09f38360dad10d8d8699725dfea6e59e5c31573
-actions_artifact_zip_sha256: 6d8969a79a55843900a87c9ab45e871861a1d06052a9b03fd564da1241c8cca3
+pdf_sha256: 82ea103fa75a9f93b0af9c2e49a92c7ca2135d67c75c9f6df214319f70e28f04
+actions_artifact_zip_sha256: be51f7aeb96915536810423007d4801b85d51635e3b4d5c3da9a3c7f4fd978e0
