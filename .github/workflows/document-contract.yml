@@ -21,7 +21,7 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq poppler-utils
-      - name: Canonical Docker syllabus font contract
+      - name: Canonical Docker syllabus PDF contract
         run: |
           PDF='curriculum/devops/docker/artifacts/docker_mastery_syllabus_v1.1.0.pdf'
           if [ ! -f "$PDF" ]; then
@@ -29,3 +29,4 @@ jobs:
             exit 1
           fi
           ./scripts/check_pdf_fonts.sh "$PDF"
+          python scripts/check_pdf_clearance.py "$PDF" --min-mm 20
