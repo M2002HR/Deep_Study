@@ -1,6 +1,15 @@
 # Content Standard for Canonical Study Documents
 
-هر Study PDF یک **Mastery Document** است، نه خلاصه‌ی عمومی.
+هر PDF آموزشی باید یک سند عمیق و قابل اتکا باشد، نه یک خلاصه عمومی.
+
+## زبان فارسی
+
+- فارسی باید **ساده، روشن و طبیعی** باشد.
+- جمله‌ها تا جای ممکن کوتاه، مستقیم و بدون پیچیدگی بی‌دلیل باشند.
+- از لحن اداری، واژه‌های سنگین، ترجمه تحت‌اللفظی و جمله‌های طولانی پرهیز شود.
+- عمق فنی کم نشود؛ موضوع سخت را با زبان ساده توضیح بده.
+- اصطلاح فنی رایج را در صورت نیاز به انگلیسی نگه دار و معنی یا نقش آن را ساده توضیح بده.
+- متن باید برای مطالعه طولانی راحت باشد و خواننده برای فهم ساختار جمله انرژی اضافه مصرف نکند.
 
 ## Metadata اجباری
 
@@ -19,7 +28,7 @@
 
 ## Scope Contract اجباری
 
-هر سند باید صریحاً شامل موارد زیر باشد:
+هر سند باید روشن کند:
 
 - In Scope
 - Out of Scope
@@ -31,42 +40,42 @@
 
 ## ساختار محتوایی پیش‌فرض
 
-1. Executive orientation / هدف
-2. Why this exists
-3. Historical context در حد مفید
-4. Terminology and invariants
-5. Mental model
-6. Architecture / state model
-7. Detailed mechanics
-8. Internals
-9. Interfaces / API / CLI / config surface
-10. Connections to other systems
-11. Security implications
-12. Performance/resource implications
-13. Production considerations
-14. Failure modes
-15. Troubleshooting decision trees
-16. Hands-on labs
-17. Experiments / prediction tasks
-18. Source/spec reading
-19. Common misconceptions
-20. Interview ladder (30s / 3m / 30m)
-21. Teach-back questions
-22. Exercises / challenge tasks
-23. Mastery checklist
-24. Open questions / unresolved items
-25. References and provenance
-26. Version history / changelog
+1. هدف و نمای کلی
+2. چرا این موضوع وجود دارد
+3. تاریخچه در حدی که کمک کند
+4. اصطلاحات و قواعد ثابت
+5. مدل ذهنی
+6. معماری / مدل وضعیت
+7. سازوکار دقیق
+8. جزئیات داخلی
+9. رابط‌ها / API / CLI / تنظیمات
+10. ارتباط با سیستم‌های دیگر
+11. نکات امنیتی
+12. کارایی و مصرف منابع
+13. نکات محیط واقعی و production
+14. خطاها و حالت‌های شکست
+15. مسیرهای عیب‌یابی
+16. آزمایش‌های عملی
+17. تمرین پیش‌بینی و مشاهده
+18. خواندن source/spec
+19. برداشت‌های اشتباه رایج
+20. پاسخ مصاحبه در سه عمق 30s / 3m / 30m
+21. سوال‌های teach-back
+22. تمرین و challenge
+23. چک‌لیست تسلط
+24. سوال‌ها و موارد حل‌نشده
+25. منابع و منشأ ادعاها
+26. تاریخچه نسخه‌ها / changelog
 
-ساختار می‌تواند برای موضوع خاص تغییر کند، اما حذف یک بخش relevant باید intentional و در Scope Contract قابل توضیح باشد.
+ساختار می‌تواند برای موضوع خاص تغییر کند، اما حذف یک بخش مهم باید عمدی و در Scope Contract قابل توضیح باشد.
 
-## قانون depth
+## قانون عمق
 
-هر مفهوم مهم باید در مناسب‌ترین عمق از این زنجیره قرار گیرد:
+هر مفهوم مهم باید تا عمق مناسب این مسیر پیش برود:
 `definition -> motivation -> model -> mechanism -> failure -> observation/debug -> implementation boundary -> source/spec evidence`.
 
-## جلوگیری از duplication
+## جلوگیری از تکرار
 
-- foundational explanation فقط در owner document کامل می‌آید؛ اسناد downstream خلاصه و cross-reference می‌دهند.
-- terminology canonical در `meta/standards/TERMINOLOGY.md` ثبت می‌شود.
-- اگر ownership یک مفهوم مبهم است، قبل از نوشتن PDF در coverage matrix مشخص شود.
+- توضیح کامل یک مفهوم پایه فقط در سند صاحب آن مفهوم می‌آید؛ سندهای بعدی خلاصه می‌کنند و لینک می‌دهند.
+- اصطلاحات ثابت در `meta/standards/TERMINOLOGY.md` ثبت می‌شوند.
+- اگر معلوم نیست یک مفهوم متعلق به کدام سند است، قبل از نوشتن PDF در coverage matrix مشخص شود.
