@@ -19,4 +19,5 @@ visual_qa:
   candidate_run_id: 31455150007
   review_basis: full-page visual review of exact CI candidate plus dedicated cover/TOC/table/reference checks
 source_sha256: 14d20dd1628e201df650627cc9005f3b00071856806eeb3b536f5fbe6e9cc737
-pdf_sha256: 73e2ab3f4c5fd4be1dc5aa2ab70434ae17e57b75fc53b55e037ee94a42f2629d
+pdf_sha256: 2f42b4808169a7dfd85a9a46143cbaedaedfe4fa5570be189b4d08c85c404eb9
+actions_artifact_zip_sha256: c49e4d4998e5db6b52217e6a4d7f8b4c34a150e64f1cb454636522300759e6a9
