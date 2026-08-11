@@ -7,6 +7,7 @@ on:
     paths:
       - 'curriculum/devops/docker/docker_mastery_syllabus_v1.1.0.md'
       - 'scripts/build_docker_syllabus_pdf.py'
+      - 'scripts/check_pdf_clearance.py'
       - 'assets/styles/deep-study-pdf.css'
       - '.github/workflows/build-docker-syllabus.yml'
   workflow_dispatch:
@@ -50,6 +51,7 @@ jobs:
         run: |
           test "$(pdfinfo .build/docker_mastery_syllabus_v1.1.0.pdf | awk '/^Pages:/ {print $2}')" -gt 0
           ./scripts/check_pdf_fonts.sh .build/docker_mastery_syllabus_v1.1.0.pdf
+          python scripts/check_pdf_clearance.py .build/docker_mastery_syllabus_v1.1.0.pdf --min-mm 20
           sha256sum .build/docker_mastery_syllabus_v1.1.0.pdf | tee .build/SHA256SUMS
       - name: Upload candidate for mandatory visual QA
         uses: actions/upload-artifact@v4
