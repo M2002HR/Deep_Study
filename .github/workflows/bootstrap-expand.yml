@@ -18,14 +18,32 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Reconstruct canonical text payload
+      - name: Reconstruct and verify canonical text payload
         shell: bash
         run: |
           set -euo pipefail
-          cat .bootstrap/payload.* > /tmp/deep-study-payload.b64
-          base64 -d /tmp/deep-study-payload.b64 > /tmp/deep-study.tar.gz
+
+          {
+            cat .bootstrap/payload.00
+            cat .bootstrap/payload.01
+            cat .bootstrap/payload.02
+            cat .bootstrap/fix03.00 .bootstrap/fix03.01 .bootstrap/fix03.02
+            cat .bootstrap/payload.04
+            cat .bootstrap/payload.05
+            cat .bootstrap/fix06.00 .bootstrap/fix06.01 .bootstrap/fix06.02
+            cat .bootstrap/payload.07
+            cat .bootstrap/payload.08
+            cat .bootstrap/fix09.00 .bootstrap/fix09.01
+          } > /tmp/deep-study-payload.b64
+
+          echo 'b21bffd363a45222d07a5c84834e7cb64462c0cda0542b8456ea22c36c74b96a  /tmp/deep-study-payload.b64' | sha256sum -c -
+
+          base64 --decode /tmp/deep-study-payload.b64 > /tmp/deep-study.tar.gz
+          echo '5d39d1dfbb2a1b93bd6c3687e5158bc888762ec5012ad62ee15fbfbacf8010e4  /tmp/deep-study.tar.gz' | sha256sum -c -
+
           tar -tzf /tmp/deep-study.tar.gz > /tmp/deep-study-paths.txt
           tar -xzf /tmp/deep-study.tar.gz -C .
+
           rm -rf .bootstrap
           rm -f .github/workflows/bootstrap-expand.yml
 
