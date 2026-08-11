@@ -28,15 +28,18 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install 'weasyprint==68.0' 'beautifulsoup4==4.14.3' 'pypdf==5.9.0'
-      - name: Fetch pinned Vazirmatn build fonts
+      - name: Fetch and register pinned Vazirmatn build fonts
         run: |
           set -euo pipefail
-          mkdir -p .build/fonts
+          mkdir -p .build/fonts "$HOME/.local/share/fonts/deep-study"
           base='https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/ttf'
           for f in Regular Medium Bold; do
             curl --fail --location --retry 3 "$base/Vazirmatn-$f.ttf" -o ".build/fonts/Vazirmatn-$f.ttf"
+            cp ".build/fonts/Vazirmatn-$f.ttf" "$HOME/.local/share/fonts/deep-study/Vazirmatn-$f.ttf"
           done
           for f in .build/fonts/*.ttf; do fc-scan --format '%{family}\n' "$f" | grep -qi Vazirmatn; done
+          fc-cache -f "$HOME/.local/share/fonts/deep-study"
+          fc-match Vazirmatn | grep -qi Vazirmatn
       - name: Build candidate PDF
         run: |
           python scripts/build_docker_syllabus_pdf.py \
