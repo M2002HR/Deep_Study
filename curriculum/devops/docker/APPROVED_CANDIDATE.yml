@@ -6,3 +6,4 @@ sha256: 73e2ab3f4c5fd4be1dc5aa2ab70434ae17e57b75fc53b55e037ee94a42f2629d
 visual_qa: PASS
 visual_qa_date: 2026-08-11
 review_basis: all-91-pages-rendered-at-180-dpi-and-visually-reviewed-plus-dedicated-cover-toc-table-reference-checks
+verification_retry: 2
