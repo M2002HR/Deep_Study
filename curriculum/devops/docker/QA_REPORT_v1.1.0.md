@@ -8,7 +8,8 @@
 - Final full render: 180 DPI
 - Canonical font: Vazirmatn v33.003
 - Approved CI run: `31455150007`
-- Approved PDF SHA256: `73e2ab3f4c5fd4be1dc5aa2ab70434ae17e57b75fc53b55e037ee94a42f2629d`
+- Approved PDF SHA256: `2f42b4808169a7dfd85a9a46143cbaedaedfe4fa5570be189b4d08c85c404eb9`
+- GitHub Actions artifact ZIP digest: `c49e4d4998e5db6b52217e6a4d7f8b4c34a150e64f1cb454636522300759e6a9`
 - Final status: **PASS**
 
 ## Structural preflight
@@ -21,7 +22,7 @@
 
 ## Visual review
 
-The exact CI candidate from run `31455150007` was rendered at 180 DPI and **all 91 pages were visually inspected**. Twenty-three 2x2 contact sheets were reviewed in sequence, covering every page. Checks included cover, all TOC pages, content pages, phase gates, table page, prompt/code block, bibliography/source registry, footer/page counters, borders, margins, mixed Persian/English text, URLs, headings, whitespace, and page breaks.
+The exact PDF inside the CI artifact from run `31455150007` was rendered at 180 DPI and **all 91 pages were visually inspected**. Twenty-three 2x2 contact sheets were reviewed in sequence, covering every page. Checks included cover, all TOC pages, content pages, phase gates, table page, prompt/code block, bibliography/source registry, footer/page counters, borders, margins, mixed Persian/English text, URLs, headings, whitespace, and page breaks.
 
 Dedicated single-page checks were then performed for:
 
@@ -42,12 +43,14 @@ No clipping, overlap, broken glyph, orphan-heading problem, malformed table, TOC
 6. A later clean GitHub runner revealed that CSS font declaration alone did not guarantee Vazirmatn resolution. That CI candidate was rejected because `pdffonts` showed DejaVu Sans fallback.
 7. The workflow was corrected to install/register the pinned Vazirmatn v33.003 Regular/Medium/Bold files in fontconfig and to fail if `fc-match` or the generated PDF font table does not resolve Vazirmatn.
 8. The resulting CI candidate from run `31455150007` passed mechanical checks and received the full 91-page visual review documented above.
+9. Approval bookkeeping was cross-checked against the `SHA256SUMS` file inside the Actions artifact. The PDF SHA and the enclosing ZIP artifact digest are deliberately recorded separately; promotion is locked to the inner PDF SHA.
 
 ## Approval rule
 
-Build success alone is not approval. The canonical repository PDF may be promoted only if the downloaded Actions artifact matches the approved run ID and SHA256 above. The promotion workflow re-verifies the SHA and embedded-font contract before committing the artifact.
+Build success alone is not approval. The canonical repository PDF may be promoted only if the downloaded Actions artifact matches the approved run ID and the **inner PDF SHA256** above. The promotion workflow re-verifies the PDF SHA and embedded-font contract before committing the artifact.
 
 ## Release hashes
 
-- Approved canonical PDF SHA256: `73e2ab3f4c5fd4be1dc5aa2ab70434ae17e57b75fc53b55e037ee94a42f2629d`
+- Approved canonical PDF SHA256: `2f42b4808169a7dfd85a9a46143cbaedaedfe4fa5570be189b4d08c85c404eb9`
+- GitHub Actions artifact ZIP SHA256: `c49e4d4998e5db6b52217e6a4d7f8b4c34a150e64f1cb454636522300759e6a9`
 - Markdown SHA256: `14d20dd1628e201df650627cc9005f3b00071856806eeb3b536f5fbe6e9cc737`
