@@ -2,46 +2,56 @@
 
 ## Typography
 
-- Canonical Persian font: **Vazirmatn**.
-- Body, headings, tables, captions, page numbers and Persian numerals use Vazirmatn.
-- Technical identifiers/commands remain Latin; direction is isolated as LTR where needed.
-- Font binary is a build dependency and is **not committed**. The pinned release and retrieval/validation workflow are version-controlled.
+- فونت اصلی فارسی: **Vazirmatn**.
+- متن، تیترها، جدول‌ها، توضیح شکل‌ها، شماره صفحه و اعداد فارسی با Vazirmatn نوشته شوند.
+- شناسه‌های فنی، دستورها، مسیرها، hashها و versionها در صورت نیاز لاتین و LTR بمانند.
+- فایل فونت داخل repo نگهداری نمی‌شود. نسخه فونت و روش دریافت و بررسی آن باید مشخص و ثابت باشد.
+
+## زبان فارسی
+
+- فارسی باید **ساده، روشن و طبیعی** باشد.
+- جمله‌ها تا جای ممکن کوتاه و مستقیم باشند.
+- از واژه‌های سنگین، اداری، مبهم و ترجمه‌های خشک انگلیسی پرهیز شود.
+- اگر یک اصطلاح فنی انگلیسی رایج‌تر و دقیق‌تر است، همان اصطلاح را کنار توضیح ساده فارسی بیاور.
+- هدف این است که متن عمیق باشد، اما خواندنش سخت و خسته‌کننده نباشد.
 
 ## Page
 
-- A4 portrait by default; landscape only when semantic content requires it.
-- Safe margins; content must never touch border/footer.
-- Thin formal page border on content pages.
-- Footer: document ID/version + Persian page counter where practical.
-- Cover page independent and uncluttered.
+- اندازه پیش‌فرض A4 عمودی است؛ حالت افقی فقط وقتی استفاده شود که واقعاً لازم باشد.
+- هر صفحه کادر نازک و مرتب داشته باشد.
+- **فاصله ناحیه متن تا کادر صفحه باید واضح و کافی باشد. مقدار پیش‌فرض: 20mm در بالا، چپ و راست و 22mm در پایین.**
+- متن، جدول، باکس، تیتر و شکل نباید به کادر صفحه نزدیک یا چسبیده دیده شوند.
+- اگر در یک صفحه به‌خاطر جدول، باکس یا متن بلند این فاصله کم شود، صفحه باید در Visual QA رد و صفحه‌آرایی اصلاح شود.
+- footer باید از متن اصلی جدا و خوانا باشد.
+- صفحه اول مستقل، خلوت و تمیز باشد.
 
 ## RTL/LTR
 
-- Persian prose true RTL and right-aligned.
-- Code, URLs, commands, hashes, version strings and paths are LTR-isolated.
-- Mixed Persian/English punctuation must be visually verified after rendering.
+- متن فارسی واقعاً RTL و راست‌چین باشد.
+- کد، URL، دستور، hash، version و path به‌صورت LTR جدا شوند.
+- ترکیب فارسی و انگلیسی بعد از render باید از نظر علائم و ترتیب دیداری بررسی شود.
 
 ## Heading hierarchy
 
-- H1 starts a major phase/chapter when sensible.
-- H2/H3 never orphan at page bottom.
-- Color palette limited and formal; semantic hierarchy comes mainly from size/weight/spacing.
+- H1 در صورت منطقی بودن، شروع فصل یا بخش اصلی باشد.
+- H2/H3 نباید تنها در پایین صفحه بمانند.
+- رنگ‌ها محدود و رسمی باشند؛ تفاوت سطح تیترها بیشتر با اندازه، وزن و فاصله مشخص شود.
 
 ## Tables and boxes
 
-- Tables must stay within printable area; long text columns get width priority.
-- Repeating header row for multi-page tables when supported.
-- Avoid a table starting with only its header at page bottom.
-- Callout boxes use a consistent style and avoid awkward page splits.
+- جدول‌ها باید کامل داخل ناحیه امن صفحه بمانند و به کادر نزدیک نشوند.
+- ستون‌های متن بلند فضای کافی بگیرند.
+- در جدول چندصفحه‌ای، header در صورت پشتیبانی تکرار شود.
+- جدول نباید در پایین صفحه فقط با header شروع شود.
+- باکس‌های توضیحی ظاهر یکسان داشته باشند و بد شکسته نشوند.
 
 ## TOC
 
-- true RTL row layout;
-- title at right extreme;
-- page number at left extreme;
-- full dotted leader between;
-- generated/revalidated only after final pagination.
+- چیدمان ردیف‌ها واقعاً RTL باشد.
+- عنوان در سمت راست و شماره صفحه در سمت چپ باشد.
+- بین عنوان و شماره صفحه نقطه‌چین کامل و یکدست باشد.
+- فهرست فقط بعد از صفحه‌بندی نهایی ساخته یا دوباره بررسی شود.
 
 ## Visual QA gate
 
-Every final candidate is rendered to PNGs (recommended 180-220 DPI). **Every page** is inspected. Defects trigger source edit -> regeneration -> full rerender/reinspection. Spot checking is not accepted for final status.
+هر نسخه نهایی باید به PNG با 180 تا 220 DPI تبدیل شود و **تمام صفحات** بررسی شوند. در هر صفحه علاوه بر clipping، فونت، RTL/LTR، جدول و شکست صفحه، فاصله متن تا کادر نیز بررسی شود. اگر هر محتوایی بیش از حد به کادر نزدیک باشد، نسخه نهایی نیست و باید از روی source اصلاح و دوباره تولید شود.
