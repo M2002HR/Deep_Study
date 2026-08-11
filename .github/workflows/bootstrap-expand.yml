@@ -37,17 +37,14 @@ jobs:
           } > /tmp/deep-study-payload.b64
 
           echo 'b21bffd363a45222d07a5c84834e7cb64462c0cda0542b8456ea22c36c74b96a  /tmp/deep-study-payload.b64' | sha256sum -c -
-
           base64 --decode /tmp/deep-study-payload.b64 > /tmp/deep-study.tar.gz
           echo '5d39d1dfbb2a1b93bd6c3687e5158bc888762ec5012ad62ee15fbfbacf8010e4  /tmp/deep-study.tar.gz' | sha256sum -c -
 
           tar -tzf /tmp/deep-study.tar.gz > /tmp/deep-study-paths.txt
           tar -xzf /tmp/deep-study.tar.gz -C .
-
           rm -rf .bootstrap
-          rm -f .github/workflows/bootstrap-expand.yml
 
-      - name: Commit exact bootstrap scope
+      - name: Commit canonical non-workflow documents
         shell: bash
         run: |
           set -euo pipefail
@@ -55,12 +52,12 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
           while IFS= read -r path; do
-            if [ -n "$path" ]; then
+            if [ -n "$path" ] && [[ "$path" != .github/workflows/* ]]; then
               git add -- "$path"
             fi
           done < /tmp/deep-study-paths.txt
 
-          git add -u -- .bootstrap .github/workflows/bootstrap-expand.yml || true
+          git add -u -- .bootstrap
 
           if git diff --cached --quiet; then
             echo 'No bootstrap changes to commit.'
