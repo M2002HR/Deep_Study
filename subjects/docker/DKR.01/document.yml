@@ -1,0 +1,21 @@
+document_id: DS-DKR-01
+version: 1.0.0
+status: canonical-study
+research_cutoff: 2026-08-11
+track: DevOps / Docker
+cover_title: Docker DKR.01
+subtitle: تاریخچه و مدل ذهنی کانتینر
+pdf_title: Docker DKR.01 - تاریخچه و مدل ذهنی کانتینر - Deep Study
+depth: Core
+subject: اولین درس رسمی مسیر Docker Mastery؛ ساخت مدل ذهنی درست از container و مرز آن با process و VM
+keywords:
+  - Docker
+  - container
+  - Linux containers
+  - OCI
+  - namespaces
+  - cgroups
+  - Moby
+  - containerd
+  - runc
+cover_note: این سند اولین واحد مطالعاتی رسمی مسیر Docker Mastery است. هدف آن ساختن پایه‌ای است که تمام درس‌های بعدی Docker روی آن سوار می‌شوند.
