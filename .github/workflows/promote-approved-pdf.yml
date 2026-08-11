@@ -41,7 +41,7 @@ jobs:
           mkdir -p /tmp/approved
           gh run download '${{ steps.approval.outputs.run_id }}' -n '${{ steps.approval.outputs.artifact }}' -D /tmp/approved
           find /tmp/approved -maxdepth 2 -type f -print
-      - name: Verify approved hash, embedded Vazirmatn, and promote
+      - name: Verify approved hash, font, clearance, and promote
         shell: bash
         run: |
           set -euo pipefail
@@ -51,7 +51,9 @@ jobs:
           test "$actual" = '${{ steps.approval.outputs.sha }}'
           mkdir -p curriculum/devops/docker/artifacts
           cp "$src" curriculum/devops/docker/artifacts/docker_mastery_syllabus_v1.1.0.pdf
-          ./scripts/check_pdf_fonts.sh curriculum/devops/docker/artifacts/docker_mastery_syllabus_v1.1.0.pdf
+          PDF='curriculum/devops/docker/artifacts/docker_mastery_syllabus_v1.1.0.pdf'
+          ./scripts/check_pdf_fonts.sh "$PDF"
+          python scripts/check_pdf_clearance.py "$PDF" --min-mm 20
       - name: Commit only the approved artifact
         shell: bash
         run: |
