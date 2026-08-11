@@ -56,7 +56,7 @@ def build_html(fragment: Path, out: Path) -> None:
         dots=soup.new_tag('span'); dots['class']=['toc-dots']
         a.append(title); a.append(dots); rows.append(a)
     cover_sub='سیلابس جامع تسلط عمیق بر Docker و پشته‌ی کانتینر<br><span dir="ltr" class="cover-stack">Linux Containers / OCI / containerd / runc / Implementation</span>'
-    html=f'''<!doctype html>\n<html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>Docker Mastery Syllabus v1.1.0 - Deep Study</title></head>\n<body>\n<section class="cover">\n  <div class="cover-kicker">DEEP STUDY</div>\n  <div class="cover-title" dir="ltr">Docker Mastery Syllabus</div>\n  <div class="cover-subtitle">{cover_sub}</div>\n  <div class="cover-rule"></div>\n  <table class="cover-meta"><tbody>\n    <tr><th>نسخه</th><td dir="ltr">1.1.0</td></tr>\n    <tr><th>وضعیت</th><td dir="ltr">Canonical Foundation</td></tr>\n    <tr><th>Research cutoff</th><td dir="ltr">2026-08-11</td></tr>\n    <tr><th>نقش سند</th><td dir="ltr">Master Curriculum / Pre-first-module baseline</td></tr>\n    <tr><th>فونت canonical</th><td dir="ltr">Vazirmatn</td></tr>\n  </tbody></table>\n  <div class="cover-note">این سند ستون فقرات مسیر <bdi dir="ltr">Docker</bdi> در پروژه <bdi dir="ltr">Deep Study</bdi> است. PDF artifact مطالعه است؛ Markdown متناظر، Source of Truth قابل version-control است.</div>\n</section>\n{str(nav)}\n{str(soup)}\n</body></html>'''
+    html=f'''<!doctype html>\n<html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>Docker Mastery Syllabus v1.1.0 - Deep Study</title></head>\n<body>\n<section class="cover">\n  <div class="cover-kicker">DEEP STUDY</div>\n  <div class="cover-title" dir="ltr">Docker Mastery Syllabus</div>\n  <div class="cover-subtitle">{cover_sub}</div>\n  <div class="cover-rule"></div>\n  <table class="cover-meta"><tbody>\n    <tr><th>نسخه</th><td dir="ltr">1.1.0</td></tr>\n    <tr><th>وضعیت</th><td dir="ltr">Canonical Foundation</td></tr>\n    <tr><th>Research cutoff</th><td dir="ltr">2026-08-11</td></tr>\n    <tr><th>نقش سند</th><td dir="ltr">Master Curriculum / Pre-first-module baseline</td></tr>\n    <tr><th>فونت اصلی</th><td dir="ltr">Vazirmatn</td></tr>\n  </tbody></table>\n  <div class="cover-note">این سند نقشه‌ی اصلی مسیر <bdi dir="ltr">Docker</bdi> در پروژه <bdi dir="ltr">Deep Study</bdi> است. نسخه‌ی Markdown منبع اصلی و قابل ویرایش است و PDF برای مطالعه استفاده می‌شود.</div>\n</section>\n{str(nav)}\n{str(soup)}\n</body></html>'''
     out.write_text(html,encoding='utf-8')
 
 def add_metadata(src: Path, dst: Path) -> None:
@@ -70,8 +70,8 @@ def add_metadata(src: Path, dst: Path) -> None:
         '/DeepStudyDocumentID':DOC_ID,
         '/DeepStudyVersion':VERSION,
         '/ResearchCutoff':CUTOFF,
-        '/VisualQAStatus':'PASS - all 91 pages visually reviewed after 180 DPI render',
-        '/VisualQADate':'2026-08-11',
+        '/VisualQAStatus':'Tracked in repository QA report and exact approved-candidate contract',
+        '/VisualQADate':'See curriculum/devops/docker/QA_REPORT_v1.1.0.md',
         '/CanonicalFont':'Vazirmatn v33.003',
     })
     with dst.open('wb') as f: writer.write(f)
