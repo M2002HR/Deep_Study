@@ -1,0 +1,53 @@
+name: Expand Deep Study bootstrap
+
+on:
+  push:
+    branches:
+      - bootstrap/deep-study-foundation
+    paths:
+      - '.bootstrap/**'
+      - '.github/workflows/bootstrap-expand.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  expand:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Reconstruct canonical text payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .bootstrap/payload.* > /tmp/deep-study-payload.b64
+          base64 -d /tmp/deep-study-payload.b64 > /tmp/deep-study.tar.gz
+          tar -tzf /tmp/deep-study.tar.gz > /tmp/deep-study-paths.txt
+          tar -xzf /tmp/deep-study.tar.gz -C .
+          rm -rf .bootstrap
+          rm -f .github/workflows/bootstrap-expand.yml
+
+      - name: Commit exact bootstrap scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          while IFS= read -r path; do
+            if [ -n "$path" ]; then
+              git add -- "$path"
+            fi
+          done < /tmp/deep-study-paths.txt
+
+          git add -u -- .bootstrap .github/workflows/bootstrap-expand.yml || true
+
+          if git diff --cached --quiet; then
+            echo 'No bootstrap changes to commit.'
+            exit 0
+          fi
+
+          git commit -m 'chore: bootstrap Deep Study document system'
+          git push
