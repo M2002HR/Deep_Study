@@ -1,0 +1,31 @@
+name: Deep Study document contract
+
+on:
+  push:
+    branches:
+      - bootstrap/deep-study-foundation
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Repository contract
+        run: ./scripts/check_repo_contract.sh
+      - name: Install PDF inspection tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils
+      - name: Canonical Docker syllabus font contract
+        run: |
+          PDF='curriculum/devops/docker/artifacts/docker_mastery_syllabus_v1.1.0.pdf'
+          if [ ! -f "$PDF" ]; then
+            echo "Missing canonical approved PDF: $PDF"
+            exit 1
+          fi
+          ./scripts/check_pdf_fonts.sh "$PDF"
