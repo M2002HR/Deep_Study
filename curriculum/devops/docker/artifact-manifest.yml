@@ -1,0 +1,20 @@
+document_id: DS-DKR-SYL
+title: Docker Mastery Syllabus
+version: 1.1.0
+status: canonical-foundation
+research_cutoff: 2026-08-11
+source: curriculum/devops/docker/docker_mastery_syllabus_v1.1.0.md
+artifact: curriculum/devops/docker/artifacts/docker_mastery_syllabus_v1.1.0.pdf
+page_count: 91
+page_size: A4
+font:
+  family: Vazirmatn
+  pinned_release: v33.003
+  embedded: true
+visual_qa:
+  status: PASS
+  date: 2026-08-11
+  full_page_render_dpi: 180
+  pages_reviewed: 91
+source_sha256: 14d20dd1628e201df650627cc9005f3b00071856806eeb3b536f5fbe6e9cc737
+pdf_sha256: e4af68904b5c5fbdcda94f743f1969d8ee80ae170023fbf09b2cf4b4fca16d64

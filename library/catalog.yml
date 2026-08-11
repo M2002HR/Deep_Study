@@ -1,0 +1,55 @@
+resources:
+  - id: book-docker-up-running-3e
+    type: book
+    title: "Docker: Up & Running"
+    edition: 3
+    authors: ["Sean P. Kane", "Karl Matthias"]
+    year: 2023
+    role: primary-pedagogical
+    repository_file: false
+    url: "https://www.oreilly.com/library/view/docker-up/9781098131814/"
+  - id: book-docker-deep-dive-4e
+    type: book
+    title: "Docker Deep Dive"
+    edition: 4
+    author: "Nigel Poulton"
+    year: 2025
+    role: companion
+    repository_file: false
+    url: "https://www.packtpub.com/en-us/product/docker-deep-dive-9781837028344"
+  - id: docker-docs
+    type: official-docs
+    title: Docker Documentation
+    role: current-behavior-source
+    url: "https://docs.docker.com/"
+  - id: oci-runtime-spec
+    type: specification
+    title: OCI Runtime Specification
+    pinned_version: "1.3.0"
+    url: "https://github.com/opencontainers/runtime-spec"
+  - id: oci-image-spec
+    type: specification
+    title: OCI Image Specification
+    pinned_version: "1.1.1"
+    url: "https://github.com/opencontainers/image-spec"
+  - id: oci-distribution-spec
+    type: specification
+    title: OCI Distribution Specification
+    pinned_version: "1.1.1"
+    url: "https://github.com/opencontainers/distribution-spec"
+  - id: moby
+    type: source-repository
+    title: Moby
+    url: "https://github.com/moby/moby"
+  - id: containerd
+    type: source-repository
+    title: containerd
+    url: "https://github.com/containerd/containerd"
+  - id: runc
+    type: source-repository
+    title: runc
+    url: "https://github.com/opencontainers/runc"
+  - id: buildkit
+    type: source-repository
+    title: BuildKit
+    url: "https://github.com/moby/buildkit"
