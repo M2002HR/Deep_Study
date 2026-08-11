@@ -23,8 +23,8 @@
 }
 @page {
   size: A4;
-  /* Keep a clear, comfortable gap between the page border and all content. */
-  margin: 20mm 20mm 22mm 20mm;
+  /* 22/24mm CSS margins keep the effective text-to-border gap >= 20mm. */
+  margin: 22mm 22mm 24mm 22mm;
   border: 0.55pt solid #c8d1dc;
   @bottom-center {
     content: "صفحه " counter(page, persian-decimal) " از " counter(pages, persian-decimal);
