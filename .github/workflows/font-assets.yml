@@ -1,0 +1,48 @@
+name: Validate PDF font assets
+
+on:
+  push:
+    branches:
+      - bootstrap/deep-study-foundation
+    paths:
+      - '.github/workflows/font-assets.yml'
+      - 'meta/standards/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/font-assets.yml'
+      - 'meta/standards/**'
+      - 'meta/prompts/MASTER_PDF_PROMPT.md'
+  workflow_dispatch:
+
+jobs:
+  vazirmatn:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download pinned Vazirmatn release files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p font-assets
+          base='https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/ttf'
+          curl --fail --location --retry 3 "$base/Vazirmatn-Regular.ttf" -o font-assets/Vazirmatn-Regular.ttf
+          curl --fail --location --retry 3 "$base/Vazirmatn-Medium.ttf"  -o font-assets/Vazirmatn-Medium.ttf
+          curl --fail --location --retry 3 "$base/Vazirmatn-Bold.ttf"    -o font-assets/Vazirmatn-Bold.ttf
+      - name: Validate font metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fontconfig
+          for f in font-assets/*.ttf; do
+            test -s "$f"
+            fc-scan --format '%{family}\n' "$f" | grep -qi 'Vazirmatn'
+          done
+      - name: Upload private build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vazirmatn-v33.003
+          path: font-assets/*.ttf
+          retention-days: 1
+          if-no-files-found: error

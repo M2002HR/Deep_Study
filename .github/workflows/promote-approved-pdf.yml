@@ -1,0 +1,66 @@
+name: Promote visually approved PDF
+
+on:
+  push:
+    branches:
+      - bootstrap/deep-study-foundation
+    paths:
+      - 'curriculum/devops/docker/APPROVED_CANDIDATE.yml'
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  promote:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PDF verification tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils
+      - name: Read approval contract
+        id: approval
+        shell: bash
+        run: |
+          set -euo pipefail
+          file='curriculum/devops/docker/APPROVED_CANDIDATE.yml'
+          run_id=$(awk -F': *' '$1=="run_id" {print $2}' "$file")
+          sha=$(awk -F': *' '$1=="sha256" {print $2}' "$file")
+          artifact=$(awk -F': *' '$1=="artifact_name" {print $2}' "$file")
+          test -n "$run_id"; test -n "$sha"; test -n "$artifact"
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "artifact=$artifact" >> "$GITHUB_OUTPUT"
+      - name: Download exact approved Actions artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/approved
+          gh run download '${{ steps.approval.outputs.run_id }}' -n '${{ steps.approval.outputs.artifact }}' -D /tmp/approved
+          find /tmp/approved -maxdepth 2 -type f -print
+      - name: Verify approved hash, font, clearance, and promote
+        shell: bash
+        run: |
+          set -euo pipefail
+          src=$(find /tmp/approved -name 'docker_mastery_syllabus_v1.1.0.pdf' -type f | head -1)
+          test -n "$src"
+          actual=$(sha256sum "$src" | awk '{print $1}')
+          test "$actual" = '${{ steps.approval.outputs.sha }}'
+          mkdir -p curriculum/devops/docker/artifacts
+          cp "$src" curriculum/devops/docker/artifacts/docker_mastery_syllabus_v1.1.0.pdf
+          PDF='curriculum/devops/docker/artifacts/docker_mastery_syllabus_v1.1.0.pdf'
+          ./scripts/check_pdf_fonts.sh "$PDF"
+          python scripts/check_pdf_clearance.py "$PDF" --min-mm 20 --frame-inset-mm 5 --min-frame-gap-mm 14
+      - name: Commit only the approved artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'deep-study-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add -- curriculum/devops/docker/artifacts/docker_mastery_syllabus_v1.1.0.pdf
+          git diff --cached --quiet && exit 0
+          git commit -m 'docs: promote visually approved Docker syllabus PDF'
+          git push

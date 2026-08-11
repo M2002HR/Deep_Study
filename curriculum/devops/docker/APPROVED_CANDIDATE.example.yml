@@ -1,0 +1,8 @@
+# Copy to APPROVED_CANDIDATE.yml only after the exact Actions candidate has
+# passed the Deep Study visual-QA contract. Never approve by build success alone.
+run_id: 0
+artifact_name: docker-syllabus-candidate
+sha256: replace-after-visual-qa
+visual_qa: PASS
+visual_qa_date: YYYY-MM-DD
+review_basis: all-pages-rendered-or-pixel-identical-to-an-already-approved-render

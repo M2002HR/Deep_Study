@@ -1,0 +1,44 @@
+document_id: DS-DKR-01
+curriculum_id: DKR.01
+title: تاریخچه و مدل ذهنی کانتینر
+version: 1.0.0
+status: published-canonical
+research_cutoff: 2026-08-11
+source: subjects/docker/DKR.01/DKR.01.md
+source_sha256: 6a81fb314939c554f90e98e165fe803b5d60f0ef3988a2d32ae272158aa23d9a
+manifest: subjects/docker/DKR.01/document.yml
+artifact: subjects/docker/DKR.01/artifacts/DS-DKR-01_v1.0.0.pdf
+pdf_sha256: 080aa14cfdc53cc08ccef66643b2bf9d798dfa6a384a6eaaa10423a1308c7b40
+page_count: 37
+page_size: A4
+font:
+  family: Vazirmatn
+  pinned_release: v33.003
+  embedded: true
+page_layout:
+  decorative_frame_inset_mm: 5
+  required_minimum_content_to_paper_edge_mm: 20
+  required_minimum_content_to_frame_gap_mm: 14
+  measured_minimum_content_to_paper_edge_mm:
+    left: 22.00
+    right: 21.94
+    top: 21.13
+    bottom: 24.98
+  measured_minimum_content_to_frame_gap_mm:
+    left: 17.00
+    right: 16.94
+    top: 16.13
+    bottom: 19.98
+visual_qa:
+  status: PASS
+  date: 2026-08-11
+  render_dpi: 180
+  pages_reviewed: 37
+  candidate_run_id: 31470101597
+  artifact_name: dkr01-study-pdf-candidate
+  artifact_zip_sha256: 2d9c7c9cd4e632bcf7d2e405da24900a19dffa55055badf8303581b1088102c6
+  review_basis: all 37 pages of the exact GitHub Actions candidate were rendered and visually reviewed; TOC, comparison table, lab, references and final page were also checked at full size
+study:
+  intended_active_hours: 3-6
+  learner_mastery: not-assessed
+  next_curriculum_id: DKR.02

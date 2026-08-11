@@ -1,0 +1,127 @@
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('__FONT_BASE__/Vazirmatn-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('__FONT_BASE__/Vazirmatn-Medium.ttf') format('truetype');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('__FONT_BASE__/Vazirmatn-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+@counter-style persian-decimal {
+  system: numeric;
+  symbols: "۰" "۱" "۲" "۳" "۴" "۵" "۶" "۷" "۸" "۹";
+  suffix: "";
+}
+@page {
+  size: A4;
+  margin: 22mm 22mm 24mm 22mm;
+  @bottom-center {
+    content: "صفحه " counter(page, persian-decimal) " از " counter(pages, persian-decimal);
+    font-family: Vazirmatn;
+    font-size: 8pt;
+    color: #637083;
+  }
+  @bottom-right {
+    content: "__DOC_ID__ / v__VERSION__";
+    font-family: Vazirmatn;
+    font-size: 7pt;
+    color: #8893a2;
+    direction: ltr;
+  }
+}
+@page:first {
+  @bottom-center { content: none; }
+  @bottom-right { content: none; }
+}
+html { font-family: Vazirmatn; color: #182230; background: white; }
+body {
+  font-family: Vazirmatn;
+  direction: rtl;
+  text-align: right;
+  font-size: 10.1pt;
+  line-height: 1.78;
+  margin: 0;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: -17mm;
+  right: -17mm;
+  bottom: -19mm;
+  left: -17mm;
+  border: 0.55pt solid #c8d1dc;
+  pointer-events: none;
+}
+.cover {
+  display: block;
+  min-height: 0;
+  height: auto;
+  padding: 47mm 9mm 0;
+  text-align: center;
+  page-break-after: always;
+}
+.cover-kicker { display:block; text-align:center; font-size:10pt; font-weight:700; letter-spacing:2px; color:#315b86; direction:ltr; margin:0 0 9mm; }
+.cover-title { display:block; width:100%; text-align:center; font-family:Vazirmatn; font-size:25pt; font-weight:700; color:#15324f; margin:0; border:0; padding:0; }
+.cover-subtitle { display:block; width:100%; text-align:center; font-size:13pt; max-width:none; margin:7mm 0 0; color:#42556b; line-height:1.9; }
+.cover-rule { width:52mm; border-top:1.6pt solid #315b86; margin:10mm auto 8mm; }
+.cover-meta { width:146mm; margin:0 auto; border-collapse:collapse; font-size:9pt; page-break-inside:avoid; }
+.cover-meta th, .cover-meta td { border:0; border-top:.45pt solid #d7dee7; background:white; padding:2mm 3mm; }
+.cover-meta tr:last-child th, .cover-meta tr:last-child td { border-bottom:.45pt solid #d7dee7; }
+.cover-meta th { width:38%; text-align:right; direction:rtl; color:#657589; font-weight:500; }
+.cover-meta td { text-align:left; color:#21374d; font-weight:600; }
+.cover-note { width:146mm; max-width:none; margin:9mm auto 0; text-align:center; font-size:9pt; color:#657589; line-height:1.9; }
+h1,h2,h3,h4 { font-family: Vazirmatn; text-align: right; color: #173958; page-break-after: avoid; break-after: avoid; }
+h1 { font-size: 18pt; border-bottom: 1pt solid #b7c7d8; padding-bottom: 2.2mm; margin-top: 7mm; page-break-before: auto; }
+h2 { font-size: 14pt; margin-top: 6mm; color: #204d76; }
+h3 { font-size: 11.5pt; margin-top: 4.2mm; color: #315b86; }
+h4 { font-size: 10.5pt; }
+p { orphans: 3; widows: 3; margin: 1.3mm 0 2.5mm; }
+ul, ol { margin: 1.8mm 0 3mm; padding-right: 7mm; padding-left: 0; }
+li { margin: .95mm 0; page-break-inside: avoid; }
+strong { font-weight: 700; }
+a { color: #245a8d; text-decoration: none; overflow-wrap: anywhere; direction: ltr; unicode-bidi: isolate; }
+code { font-family: Vazirmatn; direction: ltr; unicode-bidi: isolate; font-size: .91em; color: #1f3d5a; background: #f2f5f8; padding: .2mm .8mm; border-radius: 2px; }
+pre { font-family: Vazirmatn; direction: ltr; text-align: left; unicode-bidi: plaintext; font-size: 8.4pt; line-height: 1.55; background: #f4f6f8; border: .5pt solid #d6dee7; border-right: 2.2pt solid #54789c; padding: 3mm; white-space: pre-wrap; overflow-wrap: anywhere; page-break-inside: avoid; }
+blockquote { border-right: 2.5pt solid #6d8dac; margin: 3.5mm 0; padding: 2.7mm 4mm; background: #f7f9fb; color: #3e5063; page-break-inside: avoid; }
+hr { border: 0; border-top: .6pt solid #d7dee7; margin: 5mm 0; }
+table { width: 100%; border-collapse: collapse; margin: 4mm 0 5mm; font-size: 8.45pt; page-break-inside: auto; }
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }
+th, td { border: .55pt solid #c8d2dd; padding: 2mm 1.8mm; text-align: right; vertical-align: top; overflow-wrap: anywhere; }
+th { background: #eaf0f6; color: #244561; font-weight: 700; }
+.toc-block { page-break-before:auto; page-break-after:always; direction:rtl; padding-top:2mm; }
+.toc-block .toc-title { page-break-before:auto; border-bottom:1pt solid #b7c7d8; padding-bottom:2mm; margin-bottom:4mm; }
+.toc-rows { width:100%; }
+a.toc-row { display:flex; flex-direction:row; align-items:flex-end; width:100%; color:#24384d; text-decoration:none; line-height:1.45; margin:1.05mm 0; page-break-inside:avoid; direction:rtl; }
+a.toc-level1 { font-weight:700; color:#204d76; margin-top:2.4mm; }
+a.toc-level2 { padding-right:5mm; font-size:8.7pt; }
+.toc-entry-title { flex:0 1 auto; text-align:right; }
+.toc-dots { flex:1 1 auto; min-width:5mm; margin:0 1.8mm 1.4mm; border-bottom:.55pt dotted #9aa7b4; }
+a.toc-row::after { content: target-counter(attr(href), page, persian-decimal); flex:0 0 auto; min-width:7mm; text-align:left; color:#5c6a79; font-weight:400; direction:rtl; }
+section.level1 { page-break-before: auto; }
+section.level1:first-of-type { page-break-before: auto; }
+.callout, .definition, .exercise, .warning, .checkpoint {
+  page-break-inside: avoid;
+  border-radius: 3px;
+  padding: 3mm 4mm;
+  margin: 3.5mm 0 4mm;
+  border: .6pt solid #ccd7e2;
+  background: #f8fafc;
+}
+.definition { border-right: 3pt solid #315b86; background:#f4f8fc; }
+.exercise { border-right: 3pt solid #4d7a57; background:#f5faf6; }
+.warning { border-right: 3pt solid #a45c37; background:#fff8f3; }
+.checkpoint { border-right: 3pt solid #7a5b9e; background:#faf7fd; }
+.small { font-size: 8.7pt; color:#596a7e; }
+.source-note { font-size: 8.5pt; color:#5f7082; }
+.page-break { page-break-before: always; }
+.ltr { direction:ltr; unicode-bidi:isolate; text-align:left; }
+.center { text-align:center; }
+/* TOC gets extra horizontal breathing room. Page numbers/dot leaders must never approach the decorative frame. */
+.toc-block { padding-left: 5mm; padding-right: 5mm; }

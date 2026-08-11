@@ -1,0 +1,49 @@
+name: Deep Study document contract
+
+on:
+  push:
+    branches:
+      - bootstrap/deep-study-foundation
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Repository contract
+        run: ./scripts/check_repo_contract.sh
+      - name: Install PDF inspection tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils
+      - name: Canonical Docker syllabus PDF contract
+        run: |
+          PDF='curriculum/devops/docker/artifacts/docker_mastery_syllabus_v1.1.0.pdf'
+          test -s "$PDF" || { echo "Missing canonical syllabus PDF: $PDF"; exit 1; }
+          ./scripts/check_pdf_fonts.sh "$PDF"
+          python scripts/check_pdf_clearance.py "$PDF" --min-mm 20 --frame-inset-mm 5 --min-frame-gap-mm 14
+      - name: Canonical DKR.01 study PDF contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          PDF='subjects/docker/DKR.01/artifacts/DS-DKR-01_v1.0.0.pdf'
+          MANIFEST='subjects/docker/DKR.01/artifact-manifest.yml'
+          test -s "$PDF" || { echo "Missing canonical DKR.01 PDF: $PDF"; exit 1; }
+          test -s "$MANIFEST"
+          expected_sha=$(awk -F': *' '$1=="pdf_sha256" {print $2}' "$MANIFEST")
+          expected_pages=$(awk -F': *' '$1=="page_count" {print $2}' "$MANIFEST")
+          actual_sha=$(sha256sum "$PDF" | awk '{print $1}')
+          actual_pages=$(pdfinfo "$PDF" | awk '/^Pages:/ {print $2}')
+          test -n "$expected_sha"; test -n "$expected_pages"
+          test "$actual_sha" = "$expected_sha"
+          test "$actual_pages" = "$expected_pages"
+          grep -q '^  status: PASS$' "$MANIFEST"
+          ./scripts/check_pdf_fonts.sh "$PDF"
+          python scripts/check_pdf_clearance.py "$PDF" --min-mm 20 --frame-inset-mm 5 --min-frame-gap-mm 14
+          pdftotext "$PDF" /tmp/dkr01.txt
+          ! grep -q $'\uFFFD' /tmp/dkr01.txt
