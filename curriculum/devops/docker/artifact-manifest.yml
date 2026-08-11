@@ -5,19 +5,31 @@ status: canonical-foundation
 research_cutoff: 2026-08-11
 source: curriculum/devops/docker/docker_mastery_syllabus_v1.1.0.md
 artifact: curriculum/devops/docker/artifacts/docker_mastery_syllabus_v1.1.0.pdf
-page_count: 91
+page_count: 98
 page_size: A4
 font:
   family: Vazirmatn
   pinned_release: v33.003
   embedded: true
+page_clearance:
+  required_minimum_mm: 20.00
+  css_margin_mm:
+    top: 22
+    right: 22
+    bottom: 24
+    left: 22
+  measured_minimum_mm:
+    left: 20.74
+    right: 22.14
+    top: 22.47
+    bottom: 25.42
 visual_qa:
   status: PASS
   date: 2026-08-11
   full_page_render_dpi: 180
-  pages_reviewed: 91
-  candidate_run_id: 31455150007
-  review_basis: full-page visual review of exact CI candidate plus dedicated cover/TOC/table/reference checks
+  pages_reviewed: 98
+  candidate_run_id: 31458028545
+  review_basis: all 98 pages of the exact final CI candidate were rendered and visually reviewed; cover and coverage table were also checked at full-page size
 source_sha256: 14d20dd1628e201df650627cc9005f3b00071856806eeb3b536f5fbe6e9cc737
-pdf_sha256: 2f42b4808169a7dfd85a9a46143cbaedaedfe4fa5570be189b4d08c85c404eb9
-actions_artifact_zip_sha256: c49e4d4998e5db6b52217e6a4d7f8b4c34a150e64f1cb454636522300759e6a9
+pdf_sha256: 64696d235c43e6085effb5f0a09f38360dad10d8d8699725dfea6e59e5c31573
+actions_artifact_zip_sha256: 6d8969a79a55843900a87c9ab45e871861a1d06052a9b03fd564da1241c8cca3
