@@ -23,9 +23,8 @@
 }
 @page {
   size: A4;
-  /* 22/24mm CSS margins keep the effective text-to-border gap >= 20mm. */
+  /* Content margins are independent from the decorative page frame. */
   margin: 22mm 22mm 24mm 22mm;
-  border: 0.55pt solid #c8d1dc;
   @bottom-center {
     content: "صفحه " counter(page, persian-decimal) " از " counter(pages, persian-decimal);
     font-family: Vazirmatn;
@@ -46,6 +45,22 @@
 }
 html { font-family: Vazirmatn; color: #182230; background: white; }
 body { font-family: Vazirmatn; direction: rtl; text-align: right; font-size: 10pt; line-height: 1.72; margin: 0; }
+/*
+  The frame is intentionally independent from @page margins.
+  With A4 margins above, these negative offsets place the frame 5mm from
+  every paper edge, leaving a large visible gap between frame and content.
+*/
+body::before {
+  content: "";
+  position: fixed;
+  top: -17mm;
+  right: -17mm;
+  bottom: -19mm;
+  left: -17mm;
+  border: 0.55pt solid #c8d1dc;
+  box-sizing: border-box;
+  pointer-events: none;
+}
 .cover { page-break-after: always; min-height: 245mm; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 12mm; }
 .cover-kicker { font-size: 10pt; font-weight: 700; letter-spacing: 2px; color: #315b86; direction: ltr; margin-bottom: 10mm; }
 .cover h1 { font-family: Vazirmatn; font-size: 28pt; margin: 0; color: #15324f; font-weight: 700; }
