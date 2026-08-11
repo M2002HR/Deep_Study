@@ -15,14 +15,21 @@ def local_name(tag: str) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description='Check effective main-content distance from the PDF page border.')
+    parser = argparse.ArgumentParser(
+        description='Check effective main-content clearance from page edges and, when configured, from an independent page frame.'
+    )
     parser.add_argument('pdf', type=Path)
-    parser.add_argument('--min-mm', type=float, default=20.0, help='Minimum real content-to-border gap in every direction.')
-    parser.add_argument('--footer-exclude-mm', type=float, default=15.0, help='Bottom margin area reserved for footer and excluded from main-content checks.')
+    parser.add_argument('--min-mm', type=float, default=20.0, help='Minimum real main-content clearance from every paper edge.')
+    parser.add_argument('--frame-inset-mm', type=float, default=None, help='Distance of the decorative frame from each paper edge.')
+    parser.add_argument('--min-frame-gap-mm', type=float, default=14.0, help='Minimum real gap between main content and the decorative frame.')
+    parser.add_argument('--footer-exclude-mm', type=float, default=15.0, help='Bottom area reserved for the footer and excluded from main-content checks.')
     args = parser.parse_args()
 
     if not args.pdf.is_file():
         print(f'ERROR: PDF not found: {args.pdf}', file=sys.stderr)
+        return 2
+    if args.frame_inset_mm is not None and args.frame_inset_mm < 0:
+        print('ERROR: --frame-inset-mm must be non-negative.', file=sys.stderr)
         return 2
 
     try:
@@ -38,9 +45,12 @@ def main() -> int:
     root = ET.fromstring(xml_text)
     min_pt = args.min_mm * PT_PER_MM
     footer_exclude_pt = args.footer_exclude_mm * PT_PER_MM
+    frame_inset_pt = None if args.frame_inset_mm is None else args.frame_inset_mm * PT_PER_MM
+    min_frame_gap_pt = args.min_frame_gap_mm * PT_PER_MM
 
     global_min = {'left': float('inf'), 'right': float('inf'), 'top': float('inf'), 'bottom': float('inf')}
-    failures: list[str] = []
+    edge_failures: list[str] = []
+    frame_failures: list[str] = []
     page_count = 0
 
     for page_count, page in enumerate((e for e in root.iter() if local_name(e.tag) == 'page'), start=1):
@@ -60,7 +70,7 @@ def main() -> int:
             x_max = float(word.attrib['xMax'])
             y_max = float(word.attrib['yMax'])
 
-            # Footer is deliberately placed in the page margin and is not part of the main content area.
+            # Footer lives in the bottom page margin and is not part of the main content area.
             if y_min >= height - footer_exclude_pt:
                 continue
 
@@ -78,29 +88,51 @@ def main() -> int:
         if not found_main_content:
             continue
 
-        bad = {side: value for side, value in page_min.items() if value < min_pt}
-        if bad:
-            details = ', '.join(f'{side}={value / PT_PER_MM:.2f}mm' for side, value in bad.items())
-            failures.append(f'page {page_count}: {details}')
+        bad_edges = {side: value for side, value in page_min.items() if value < min_pt}
+        if bad_edges:
+            details = ', '.join(f'{side}={value / PT_PER_MM:.2f}mm' for side, value in bad_edges.items())
+            edge_failures.append(f'page {page_count}: {details}')
+
+        if frame_inset_pt is not None:
+            bad_frame = {
+                side: value - frame_inset_pt
+                for side, value in page_min.items()
+                if value - frame_inset_pt < min_frame_gap_pt
+            }
+            if bad_frame:
+                details = ', '.join(f'{side}={value / PT_PER_MM:.2f}mm' for side, value in bad_frame.items())
+                frame_failures.append(f'page {page_count}: {details}')
 
     if page_count == 0:
         print('ERROR: no PDF pages found in bbox output', file=sys.stderr)
         return 2
 
-    print('Effective main-content clearance:')
+    print('Effective main-content clearance from paper edges:')
     for side in ('left', 'right', 'top', 'bottom'):
         value = global_min[side]
         print(f'  {side}: {value / PT_PER_MM:.2f}mm')
 
-    if failures:
-        print(f'ERROR: clearance must be at least {args.min_mm:.2f}mm on every side.', file=sys.stderr)
-        for failure in failures[:30]:
-            print(f'  {failure}', file=sys.stderr)
-        if len(failures) > 30:
-            print(f'  ... and {len(failures) - 30} more pages', file=sys.stderr)
+    if frame_inset_pt is not None:
+        print(f'Decorative frame inset: {args.frame_inset_mm:.2f}mm from every paper edge')
+        print('Effective main-content gap from decorative frame:')
+        for side in ('left', 'right', 'top', 'bottom'):
+            value = global_min[side] - frame_inset_pt
+            print(f'  {side}: {value / PT_PER_MM:.2f}mm')
+
+    if edge_failures or frame_failures:
+        if edge_failures:
+            print(f'ERROR: paper-edge clearance must be at least {args.min_mm:.2f}mm on every side.', file=sys.stderr)
+            for failure in edge_failures[:30]:
+                print(f'  {failure}', file=sys.stderr)
+        if frame_failures:
+            print(f'ERROR: content-to-frame gap must be at least {args.min_frame_gap_mm:.2f}mm on every side.', file=sys.stderr)
+            for failure in frame_failures[:30]:
+                print(f'  {failure}', file=sys.stderr)
         return 1
 
-    print(f'PASS: every page keeps at least {args.min_mm:.2f}mm effective main-content clearance.')
+    print(f'PASS: every page keeps at least {args.min_mm:.2f}mm main-content clearance from the paper edges.')
+    if frame_inset_pt is not None:
+        print(f'PASS: every page keeps at least {args.min_frame_gap_mm:.2f}mm main-content gap from the decorative frame.')
     return 0
 
 
