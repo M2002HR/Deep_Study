@@ -7,13 +7,14 @@
 1. `CURRENT_STATE.md` - الان پروژه دقیقاً کجاست و قدم بعدی چیست؟
 2. `PROJECT.md` - هدف کل پروژه چیست؟
 3. `AGENTS.md` - قرارداد اجرایی برای ChatGPT/Codex/agentها.
-4. `STUDY_METHOD.md` - روش یادگیری پروژه.
-5. `CONTENT_STANDARD.md` - هر سند درسی چه کیفیت و ساختاری باید داشته باشد؟
-6. `SOURCE_POLICY.md` - از چه منبعی برای چه نوع ادعایی استفاده شود؟
-7. `RESEARCH_METHOD.md` - روش تحقیق syllabus و module.
-8. `MASTERY.md` - چه زمانی یک درس واقعاً تمام شده است؟
-9. `meta/prompts/MASTER_PDF_PROMPT.md` و `meta/prompts/PDF_GENERATION.md` - برای هر PDF اجباری‌اند.
-10. syllabus مسیر فعال و سندهای upstream/downstream همان موضوع.
+4. `meta/standards/GIT_WORKFLOW.md` - تغییرات Git به‌طور پیش‌فرض چگونه ثبت شوند؟
+5. `STUDY_METHOD.md` - روش یادگیری پروژه.
+6. `CONTENT_STANDARD.md` - هر سند درسی چه کیفیت و ساختاری باید داشته باشد؟
+7. `SOURCE_POLICY.md` - از چه منبعی برای چه نوع ادعایی استفاده شود؟
+8. `RESEARCH_METHOD.md` - روش تحقیق syllabus و module.
+9. `MASTERY.md` - چه زمانی یک درس واقعاً تمام شده است؟
+10. `meta/prompts/MASTER_PDF_PROMPT.md` و `meta/prompts/PDF_GENERATION.md` - برای هر PDF اجباری‌اند.
+11. syllabus مسیر فعال و سندهای upstream/downstream همان موضوع.
 
 ## اگر می‌خواهی مسیر فعلی را ادامه بدهی
 
@@ -25,6 +26,10 @@
 
 ## چند قانون خیلی مهم
 
+- branch اصلی پروژه `main` است.
+- تغییرات معمول را مستقیم روی آخرین نسخه `main` ثبت کن.
+- به‌صورت پیش‌فرض branch جدا یا Pull Request نساز؛ فقط با درخواست صریح user.
+- اگر direct write روی `main` ممکن نبود، خطا را گزارش کن و خودکار PR نساز.
 - از حافظه مدل به‌تنهایی سند نهایی نساز.
 - Markdown/structured source منبع اصلی است؛ PDF خروجی مطالعه است.
 - متن فارسی تا جای ممکن ساده، روشن و طبیعی باشد.
