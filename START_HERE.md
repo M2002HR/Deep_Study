@@ -8,17 +8,23 @@
 2. `PROJECT.md` - هدف کل پروژه چیست؟
 3. `AGENTS.md` - قرارداد اجرایی برای ChatGPT/Codex/agentها.
 4. `meta/standards/GIT_WORKFLOW.md` - تغییرات Git به‌طور پیش‌فرض چگونه ثبت شوند؟
-5. `STUDY_METHOD.md` - روش یادگیری پروژه.
-6. `CONTENT_STANDARD.md` - هر سند درسی چه کیفیت و ساختاری باید داشته باشد؟
-7. `SOURCE_POLICY.md` - از چه منبعی برای چه نوع ادعایی استفاده شود؟
-8. `RESEARCH_METHOD.md` - روش تحقیق syllabus و module.
-9. `MASTERY.md` - چه زمانی یک درس واقعاً تمام شده است؟
-10. `meta/prompts/MASTER_PDF_PROMPT.md` و `meta/prompts/PDF_GENERATION.md` - برای هر PDF اجباری‌اند.
-11. syllabus مسیر فعال و سندهای upstream/downstream همان موضوع.
+5. `meta/standards/PROGRESSION_AND_PREREQUISITES.md` - تفاوت authoring، publication، prerequisite readiness و learner mastery.
+6. `STUDY_METHOD.md` - روش یادگیری پروژه.
+7. `CONTENT_STANDARD.md` - هر سند درسی چه کیفیت و ساختاری باید داشته باشد؟
+8. `SOURCE_POLICY.md` - از چه منبعی برای چه نوع ادعایی استفاده شود؟
+9. `RESEARCH_METHOD.md` - روش تحقیق syllabus و module.
+10. `MASTERY.md` - چه زمانی یک درس واقعاً تمام شده است؟
+11. `meta/prompts/MASTER_PDF_PROMPT.md` و `meta/prompts/PDF_GENERATION.md` - برای هر PDF اجباری‌اند.
+12. syllabus مسیر فعال و سندهای upstream/downstream همان موضوع.
 
 ## اگر می‌خواهی مسیر فعلی را ادامه بدهی
 
 `meta/CONTINUATION_PROTOCOL.md` و `meta/prompts/CONTINUE_EXISTING_TRACK.md` را اجرا کن.
+
+قبل از انتخاب next ID، مشخص کن درخواست user درباره‌ی کدام مسیر است:
+
+- **authoring/آماده‌سازی PDF بعدی**: authoring eligibility را بررسی کن؛ pending بودن mastery learner به‌تنهایی ساخت سند downstream را block نمی‌کند.
+- **شروع مطالعه درس بعدی**: mastery prerequisiteها و readiness عملی/محیطی را جدا بررسی کن.
 
 ## اگر می‌خواهی یک موضوع کاملاً جدید شروع کنی
 
@@ -35,5 +41,7 @@
 - متن فارسی تا جای ممکن ساده، روشن و طبیعی باشد.
 - از انگلیسی فقط جایی استفاده کن که اصطلاح فنی رایج یا نام دقیق لازم است.
 - هیچ PDF نهایی نیست تا همه صفحه‌هایش render و بررسی دیداری نشده باشند.
-- ساخته‌شدن PDF به معنی mastered شدن درس توسط learner نیست؛ وضعیت مطالعه جدا ثبت می‌شود.
+- ساخته‌شدن یا منتشرشدن PDF به معنی mastered شدن درس توسط learner نیست.
+- operational prerequisite readiness نیز state جداگانه دارد و باید evidence خودش را داشته باشد.
+- بعد از publication، registry + coverage + progress + current state + manifest + QA باید با هم sync شوند.
 - همیشه روی آخرین نسخه درست ادامه بده و fixهای قبلی را برنگردان.
