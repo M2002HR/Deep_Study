@@ -1,0 +1,10 @@
+# Exact Study PDF candidate approved only after full visual QA of every page.
+# Build success alone is never approval.
+run_id: 0
+artifact_name: example-study-pdf-candidate
+pdf_filename: DS-EXAMPLE-01_v1.0.0.pdf
+sha256: replace-with-exact-pdf-sha256
+page_count: 0
+visual_qa: PASS
+visual_qa_date: YYYY-MM-DD
+review_basis: all-pages-rendered-and-visually-reviewed
