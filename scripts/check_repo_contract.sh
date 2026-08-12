@@ -12,6 +12,7 @@ required=(
   meta/prompts/NEW_TOPIC_SYLLABUS.md
   meta/prompts/source/REPORT_GENERATION_PROMPT_ORIGINAL.md
   meta/standards/GIT_WORKFLOW.md
+  meta/standards/PROGRESSION_AND_PREREQUISITES.md
   meta/standards/PDF_STYLE_GUIDE.md
   meta/standards/PDF_PRODUCTION_WORKFLOW.md
   meta/standards/CROSS_DOCUMENT_CONSISTENCY.md
@@ -20,8 +21,10 @@ required=(
   meta/templates/study-document.yml
   meta/templates/STUDY_PDF_WORKFLOW.md
   scripts/build_study_pdf.py
+  scripts/check_published_study_docs.sh
   assets/styles/deep-study-study-pdf.css
   curriculum/devops/docker/PROGRESS.md
+  curriculum/devops/docker/coverage-matrix.md
   subjects/docker/DKR.01/README.md
   subjects/docker/DKR.01/DKR.01.md
   subjects/docker/DKR.01/document.yml
@@ -39,10 +42,13 @@ fi
 if find "$root/library" -type f \( -iname '*.pdf' -o -iname '*.epub' -o -iname '*.mobi' \) | grep -q .; then
   echo 'book binary found under library/; use catalog metadata instead' >&2; exit 1
 fi
-# Stable handoff rules: published study docs must be discoverable from state/registry/progress.
+# Stable handoff rules: published study docs must be discoverable and state dimensions must stay separate.
 grep -q 'DS-DKR-01' "$root/DOCUMENT_REGISTRY.md"
 grep -q 'DKR.01' "$root/CURRENT_STATE.md"
 grep -q 'DKR.02' "$root/curriculum/devops/docker/PROGRESS.md"
+grep -q 'published-canonical' "$root/curriculum/devops/docker/coverage-matrix.md"
+grep -q 'Authoring eligibility' "$root/meta/standards/PROGRESSION_AND_PREREQUISITES.md"
+grep -q 'Learner mastery' "$root/meta/standards/PROGRESSION_AND_PREREQUISITES.md"
 # Git workflow must remain explicit and recoverable in a fresh session.
 grep -q 'branch پیش‌فرض و canonical پروژه: `main`' "$root/meta/standards/GIT_WORKFLOW.md"
 grep -q 'branch جدا نساز' "$root/meta/standards/GIT_WORKFLOW.md"
