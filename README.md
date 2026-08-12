@@ -31,9 +31,13 @@ Deep Study یک برنامه‌ی بلندمدت، source-grounded و versioned 
 - Canonical syllabus PDF: `curriculum/devops/docker/artifacts/docker_mastery_syllabus_v1.1.0.pdf`
 - Syllabus QA evidence: `curriculum/devops/docker/QA_REPORT_v1.1.0.md`
 - Syllabus artifact manifest: `curriculum/devops/docker/artifact-manifest.yml`
-- First canonical Study source: `subjects/docker/DKR.01/DKR.01.md`
-- First canonical Study PDF: `subjects/docker/DKR.01/artifacts/DS-DKR-01_v1.0.0.pdf`
+- DKR.01 source: `subjects/docker/DKR.01/DKR.01.md`
+- DKR.01 PDF: `subjects/docker/DKR.01/artifacts/DS-DKR-01_v1.0.0.pdf`
 - DKR.01 QA: `subjects/docker/DKR.01/QA_REPORT_v1.0.0.md`
+- DKR.02 source: `subjects/docker/DKR.02/DKR.02.md`
+- DKR.02 PDF: `subjects/docker/DKR.02/artifacts/DS-DKR-02_v1.0.0.pdf`
+- DKR.02 artifact manifest: `subjects/docker/DKR.02/artifact-manifest.yml`
+- DKR.02 QA: `subjects/docker/DKR.02/QA_REPORT_v1.0.0.md`
 - Docker track progress / next authoring target: `curriculum/devops/docker/PROGRESS.md`
 
 ## Study PDF infrastructure
@@ -44,4 +48,4 @@ Deep Study یک برنامه‌ی بلندمدت، source-grounded و versioned 
 - Generic published-document validation: `scripts/check_published_study_docs.sh`
 - Workflow template/contract: `meta/templates/STUDY_PDF_WORKFLOW.md`
 
-در وضعیت فعلی، `DKR.01` published-canonical است و `DKR.02` next eligible authoring target است؛ learner mastery `DKR.01` جداگانه track می‌شود.
+در وضعیت فعلی، `DKR.01` و `DKR.02` هر دو `published-canonical` هستند. next eligible authoring target برابر `DKR.03` است؛ learner mastery و readiness عملی همچنان مستقل و evidence-based track می‌شوند.
