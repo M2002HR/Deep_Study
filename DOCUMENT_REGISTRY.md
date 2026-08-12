@@ -6,6 +6,7 @@
 |---|---|---|---|---|---|---|---|
 | DS-DKR-SYL | syllabus | DevOps/Docker | Docker Mastery Syllabus | 1.1.0 | canonical-foundation | `curriculum/devops/docker/docker_mastery_syllabus_v1.1.0.md` | `curriculum/devops/docker/artifacts/docker_mastery_syllabus_v1.1.0.pdf` |
 | DS-DKR-01 | DKR.01 | DevOps/Docker | تاریخچه و مدل ذهنی کانتینر | 1.0.0 | published-canonical | `subjects/docker/DKR.01/DKR.01.md` | `subjects/docker/DKR.01/artifacts/DS-DKR-01_v1.0.0.pdf` |
+| DS-DKR-02 | DKR.02 | DevOps/Docker | نصب، Editions، Platforms و Distribution | 1.0.0 | published-canonical | `subjects/docker/DKR.02/DKR.02.md` | `subjects/docker/DKR.02/artifacts/DS-DKR-02_v1.0.0.pdf` |
 
 ## قانون
 
