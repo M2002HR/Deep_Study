@@ -20,6 +20,9 @@ required=(
   meta/standards/TERMINOLOGY.md
   meta/templates/study-document.yml
   meta/templates/STUDY_PDF_WORKFLOW.md
+  meta/templates/APPROVED_STUDY_CANDIDATE.example.yml
+  .github/workflows/reusable-build-study-pdf.yml
+  .github/workflows/reusable-promote-study-pdf.yml
   scripts/build_study_pdf.py
   scripts/check_published_study_docs.sh
   assets/styles/deep-study-study-pdf.css
@@ -49,6 +52,10 @@ grep -q 'DKR.02' "$root/curriculum/devops/docker/PROGRESS.md"
 grep -q 'published-canonical' "$root/curriculum/devops/docker/coverage-matrix.md"
 grep -q 'Authoring eligibility' "$root/meta/standards/PROGRESSION_AND_PREREQUISITES.md"
 grep -q 'Learner mastery' "$root/meta/standards/PROGRESSION_AND_PREREQUISITES.md"
+# Generic Study PDF build/promotion must remain available for modules after DKR.01.
+grep -q 'workflow_call:' "$root/.github/workflows/reusable-build-study-pdf.yml"
+grep -q 'workflow_call:' "$root/.github/workflows/reusable-promote-study-pdf.yml"
+grep -q 'pdf_filename:' "$root/meta/templates/APPROVED_STUDY_CANDIDATE.example.yml"
 # Git workflow must remain explicit and recoverable in a fresh session.
 grep -q 'branch پیش‌فرض و canonical پروژه: `main`' "$root/meta/standards/GIT_WORKFLOW.md"
 grep -q 'branch جدا نساز' "$root/meta/standards/GIT_WORKFLOW.md"
