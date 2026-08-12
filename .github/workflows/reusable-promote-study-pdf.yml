@@ -1,0 +1,94 @@
+name: Reusable promote approved Study PDF
+
+on:
+  workflow_call:
+    inputs:
+      approval_file:
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      approval_file:
+        description: Path to APPROVED_CANDIDATE.yml for a Study PDF
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  promote:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PDF verification tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils
+      - name: Read approval contract
+        id: approval
+        shell: bash
+        env:
+          APPROVAL_FILE: ${{ inputs.approval_file }}
+        run: |
+          set -euo pipefail
+          test -s "$APPROVAL_FILE"
+          run_id=$(awk -F': *' '$1=="run_id" {print $2}' "$APPROVAL_FILE")
+          sha=$(awk -F': *' '$1=="sha256" {print $2}' "$APPROVAL_FILE")
+          artifact=$(awk -F': *' '$1=="artifact_name" {print $2}' "$APPROVAL_FILE")
+          pdf_filename=$(awk -F': *' '$1=="pdf_filename" {print $2}' "$APPROVAL_FILE")
+          page_count=$(awk -F': *' '$1=="page_count" {print $2}' "$APPROVAL_FILE")
+          visual_qa=$(awk -F': *' '$1=="visual_qa" {print $2}' "$APPROVAL_FILE")
+          test -n "$run_id"; test -n "$sha"; test -n "$artifact"
+          test -n "$pdf_filename"; test -n "$page_count"
+          test "$visual_qa" = 'PASS'
+          module_dir=$(dirname "$APPROVAL_FILE")
+          destination="$module_dir/artifacts/$pdf_filename"
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "artifact=$artifact" >> "$GITHUB_OUTPUT"
+          echo "pdf_filename=$pdf_filename" >> "$GITHUB_OUTPUT"
+          echo "page_count=$page_count" >> "$GITHUB_OUTPUT"
+          echo "destination=$destination" >> "$GITHUB_OUTPUT"
+      - name: Download exact approved Actions artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/approved
+          gh run download '${{ steps.approval.outputs.run_id }}' -n '${{ steps.approval.outputs.artifact }}' -D /tmp/approved
+          find /tmp/approved -maxdepth 2 -type f -print
+      - name: Verify exact PDF and promote
+        shell: bash
+        env:
+          PDF_FILENAME: ${{ steps.approval.outputs.pdf_filename }}
+          EXPECTED_SHA: ${{ steps.approval.outputs.sha }}
+          EXPECTED_PAGES: ${{ steps.approval.outputs.page_count }}
+          DESTINATION: ${{ steps.approval.outputs.destination }}
+        run: |
+          set -euo pipefail
+          src=$(find /tmp/approved -name "$PDF_FILENAME" -type f | head -1)
+          test -n "$src"
+          actual=$(sha256sum "$src" | awk '{print $1}')
+          test "$actual" = "$EXPECTED_SHA"
+          test "$(pdfinfo "$src" | awk '/^Pages:/ {print $2}')" = "$EXPECTED_PAGES"
+          ./scripts/check_pdf_fonts.sh "$src"
+          python scripts/check_pdf_clearance.py "$src" --min-mm 20 --frame-inset-mm 5 --min-frame-gap-mm 14
+          pdftotext "$src" /tmp/study-pdf.txt
+          ! grep -q $'\uFFFD' /tmp/study-pdf.txt
+          mkdir -p "$(dirname "$DESTINATION")"
+          cp "$src" "$DESTINATION"
+      - name: Commit only the exact approved artifact
+        shell: bash
+        env:
+          DESTINATION: ${{ steps.approval.outputs.destination }}
+        run: |
+          set -euo pipefail
+          git config user.name 'deep-study-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add -- "$DESTINATION"
+          git diff --cached --quiet && exit 0
+          git commit -m "docs: promote approved Study PDF $(basename "$DESTINATION")"
+          git push origin HEAD:main
