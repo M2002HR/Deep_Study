@@ -1,0 +1,27 @@
+name: Build DKR.02 study PDF candidate
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'subjects/docker/DKR.02/DKR.02.md'
+      - 'subjects/docker/DKR.02/document.yml'
+      - 'scripts/build_study_pdf.py'
+      - 'scripts/check_pdf_fonts.sh'
+      - 'scripts/check_pdf_clearance.py'
+      - 'assets/styles/deep-study-study-pdf.css'
+      - '.github/workflows/reusable-build-study-pdf.yml'
+      - '.github/workflows/build-dkr02.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    uses: ./.github/workflows/reusable-build-study-pdf.yml
+    with:
+      source_path: subjects/docker/DKR.02/DKR.02.md
+      manifest_path: subjects/docker/DKR.02/document.yml
+      artifact_name: dkr02-study-pdf-candidate
