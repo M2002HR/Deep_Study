@@ -62,11 +62,13 @@ while IFS= read -r line; do
   python "$root/scripts/check_pdf_clearance.py" "$root/$pdf" --min-mm 20 --frame-inset-mm 5 --min-frame-gap-mm 14
 
   tmp_txt=$(mktemp)
-  trap 'rm -f "$tmp_txt"' RETURN
   pdftotext "$root/$pdf" "$tmp_txt"
-  ! grep -q $'\uFFFD' "$tmp_txt"
+  if grep -q $'\uFFFD' "$tmp_txt"; then
+    rm -f "$tmp_txt"
+    echo "replacement glyph found in extracted text: $pdf" >&2
+    exit 1
+  fi
   rm -f "$tmp_txt"
-  trap - RETURN
 
 done < "$registry"
 
