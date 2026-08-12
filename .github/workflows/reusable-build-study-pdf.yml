@@ -1,0 +1,109 @@
+name: Reusable build Study PDF candidate
+
+on:
+  workflow_call:
+    inputs:
+      source_path:
+        required: true
+        type: string
+      manifest_path:
+        required: true
+        type: string
+      artifact_name:
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      source_path:
+        description: Canonical Markdown source path
+        required: true
+        type: string
+      manifest_path:
+        description: document.yml path
+        required: true
+        type: string
+      artifact_name:
+        description: Candidate artifact name
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve document identity
+        id: doc
+        shell: bash
+        env:
+          MANIFEST: ${{ inputs.manifest_path }}
+        run: |
+          set -euo pipefail
+          test -s "$MANIFEST"
+          doc_id=$(awk -F': *' '$1=="document_id" {print $2}' "$MANIFEST")
+          version=$(awk -F': *' '$1=="version" {print $2}' "$MANIFEST")
+          test -n "$doc_id"; test -n "$version"
+          filename="${doc_id}_v${version}.pdf"
+          echo "doc_id=$doc_id" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "filename=$filename" >> "$GITHUB_OUTPUT"
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq pandoc poppler-utils fontconfig libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0
+      - name: Install pinned Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'weasyprint==68.0' 'beautifulsoup4==4.14.3' 'pypdf==5.9.0' 'PyYAML==6.0.2'
+      - name: Fetch and register pinned Vazirmatn build fonts
+        run: |
+          set -euo pipefail
+          mkdir -p .build/fonts "$HOME/.local/share/fonts/deep-study"
+          base='https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/ttf'
+          for f in Regular Medium Bold; do
+            curl --fail --location --retry 3 "$base/Vazirmatn-$f.ttf" -o ".build/fonts/Vazirmatn-$f.ttf"
+            cp ".build/fonts/Vazirmatn-$f.ttf" "$HOME/.local/share/fonts/deep-study/Vazirmatn-$f.ttf"
+          done
+          for f in .build/fonts/*.ttf; do fc-scan --format '%{family}\n' "$f" | grep -qi Vazirmatn; done
+          fc-cache -f "$HOME/.local/share/fonts/deep-study"
+          fc-match Vazirmatn | grep -qi Vazirmatn
+      - name: Build candidate
+        shell: bash
+        env:
+          SOURCE: ${{ inputs.source_path }}
+          MANIFEST: ${{ inputs.manifest_path }}
+          OUTPUT: .build/${{ steps.doc.outputs.filename }}
+        run: |
+          set -euo pipefail
+          test -s "$SOURCE"
+          python scripts/build_study_pdf.py \
+            --source "$SOURCE" \
+            --manifest "$MANIFEST" \
+            --output "$OUTPUT" \
+            --font-dir .build/fonts \
+            --style assets/styles/deep-study-study-pdf.css
+      - name: Mechanical checks
+        shell: bash
+        env:
+          PDF: .build/${{ steps.doc.outputs.filename }}
+        run: |
+          set -euo pipefail
+          test "$(pdfinfo "$PDF" | awk '/^Pages:/ {print $2}')" -gt 0
+          ./scripts/check_pdf_fonts.sh "$PDF"
+          python scripts/check_pdf_clearance.py "$PDF" --min-mm 20 --frame-inset-mm 5 --min-frame-gap-mm 14
+          pdftotext "$PDF" .build/extracted.txt
+          ! grep -q $'\uFFFD' .build/extracted.txt
+          sha256sum "$PDF" | tee .build/SHA256SUMS
+      - name: Upload candidate for mandatory visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: |
+            .build/${{ steps.doc.outputs.filename }}
+            .build/SHA256SUMS
+          retention-days: 14
+          if-no-files-found: error
