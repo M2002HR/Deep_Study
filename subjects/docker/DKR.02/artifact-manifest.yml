@@ -1,0 +1,50 @@
+document_id: DS-DKR-02
+curriculum_id: DKR.02
+title: نصب، Editions، Platforms و Distribution
+version: 1.0.0
+status: published-canonical
+research_cutoff: 2026-08-12
+source: subjects/docker/DKR.02/DKR.02.md
+source_sha256: 7bde2f120b8f36f4ffbf8a1f1613e1a97300eea94bf419baf5273054938a94f5
+manifest: subjects/docker/DKR.02/document.yml
+artifact: subjects/docker/DKR.02/artifacts/DS-DKR-02_v1.0.0.pdf
+pdf_sha256: 109e9d47c69cdecc33ab5e70be8e13baf7a224edc8a172b88fe33a69cadb0ab6
+page_count: 42
+page_size: A4
+font:
+  family: Vazirmatn
+  pinned_release: v33.003
+  embedded: true
+  strict_final_set:
+    - Vazirmatn
+    - Vazirmatn-Medium
+    - Vazirmatn-Bold
+page_layout:
+  decorative_frame_inset_mm: 5
+  required_minimum_content_to_paper_edge_mm: 20
+  required_minimum_content_to_frame_gap_mm: 14
+  measured_minimum_content_to_paper_edge_mm:
+    left: 22.00
+    right: 21.94
+    top: 22.39
+    bottom: 24.45
+  measured_minimum_content_to_frame_gap_mm:
+    left: 17.00
+    right: 16.94
+    top: 17.39
+    bottom: 19.45
+visual_qa:
+  status: PASS
+  date: 2026-08-12
+  render_dpi: 180
+  pages_reviewed: 42
+  candidate_run_id: 31617684197
+  artifact_name: dkr02-study-pdf-candidate
+  artifact_zip_sha256: baeca59735bc2a7c18a5325772eff5fc8fcf161f8ad25cd7e438b4ac76c86492
+  review_basis: all 42 pages of the exact refined GitHub Actions candidate were rendered at 180 DPI and visually reviewed; cover, RTL TOC with Persian counters, comparison table, labs/topology, evidence table, references and final page were also checked at full size
+study:
+  intended_active_hours: 4-7
+  learner_mastery: not-started
+  prerequisite_readiness:
+    META.DKR.02: pending
+  next_curriculum_id: DKR.03
