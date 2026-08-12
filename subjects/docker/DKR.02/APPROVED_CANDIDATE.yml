@@ -1,0 +1,12 @@
+# Exact DKR.02 candidate approved only after full Deep Study visual QA.
+# Build success alone is never approval.
+run_id: 31617684197
+artifact_name: dkr02-study-pdf-candidate
+pdf_filename: DS-DKR-02_v1.0.0.pdf
+sha256: 109e9d47c69cdecc33ab5e70be8e13baf7a224edc8a172b88fe33a69cadb0ab6
+artifact_zip_sha256: baeca59735bc2a7c18a5325772eff5fc8fcf161f8ad25cd7e438b4ac76c86492
+page_count: 42
+visual_qa: PASS
+visual_qa_date: 2026-08-12
+render_dpi: 180
+review_basis: all-42-pages-rendered-at-180-dpi-and-visually-reviewed-with-full-size-cover-toc-comparison-table-labs-topology-evidence-table-references-and-final-page-checks
