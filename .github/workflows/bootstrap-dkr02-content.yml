@@ -1,0 +1,121 @@
+name: Materialize and build DKR.02 canonical source
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/bootstrap-dkr02-content.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  materialize-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Materialize exact reviewed DKR.02 source
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import base64, gzip, hashlib
+          parts = [Path(f'.bootstrap/dkr02/source.part{i:02d}').read_text(encoding='utf-8').strip() for i in range(1, 5)]
+          data = gzip.decompress(base64.b64decode(''.join(parts)))
+          expected = '2a2598a9e793fa6a1522af5969eaf779d2b159b102aa1b1eaf1bca34607085ae'
+          actual = hashlib.sha256(data).hexdigest()
+          if actual != expected:
+              raise SystemExit(f'DKR.02 source SHA mismatch: {actual} != {expected}')
+          out = Path('subjects/docker/DKR.02/DKR.02.md')
+          out.parent.mkdir(parents=True, exist_ok=True)
+          out.write_bytes(data)
+          print(f'Materialized {out}: {len(data)} bytes sha256={actual}')
+          PY
+
+      - name: Align table layout with canonical 64-rule PDF prompt
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('assets/styles/deep-study-study-pdf.css')
+          text = p.read_text(encoding='utf-8')
+          old = "th, td { border: .55pt solid #c8d2dd; padding: 2mm 1.8mm; text-align: right; vertical-align: top; overflow-wrap: anywhere; }"
+          new = "th, td { border: .55pt solid #c8d2dd; padding: 2mm 1.8mm; text-align: center; vertical-align: middle; overflow-wrap: anywhere; }"
+          if old in text:
+              text = text.replace(old, new, 1)
+          elif new not in text:
+              raise SystemExit('Expected table CSS rule not found; refusing an unsafe layout patch')
+          p.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq pandoc poppler-utils fontconfig libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0
+
+      - name: Install pinned Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'weasyprint==68.0' 'beautifulsoup4==4.14.3' 'pypdf==5.9.0' 'PyYAML==6.0.2'
+
+      - name: Fetch and register pinned Vazirmatn v33.003
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .build/fonts "$HOME/.local/share/fonts/deep-study"
+          base='https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/ttf'
+          for f in Regular Medium Bold; do
+            curl --fail --location --retry 3 "$base/Vazirmatn-$f.ttf" -o ".build/fonts/Vazirmatn-$f.ttf"
+            cp ".build/fonts/Vazirmatn-$f.ttf" "$HOME/.local/share/fonts/deep-study/Vazirmatn-$f.ttf"
+          done
+          for f in .build/fonts/*.ttf; do fc-scan --format '%{family}\n' "$f" | grep -qi Vazirmatn; done
+          fc-cache -f "$HOME/.local/share/fonts/deep-study"
+          fc-match Vazirmatn | grep -qi Vazirmatn
+
+      - name: Build exact DKR.02 candidate
+        run: |
+          python scripts/build_study_pdf.py \
+            --source subjects/docker/DKR.02/DKR.02.md \
+            --manifest subjects/docker/DKR.02/document.yml \
+            --output .build/DS-DKR-02_v1.0.0.pdf \
+            --font-dir .build/fonts \
+            --style assets/styles/deep-study-study-pdf.css
+
+      - name: Mechanical preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(pdfinfo .build/DS-DKR-02_v1.0.0.pdf | awk '/^Pages:/ {print $2}')" -gt 0
+          ./scripts/check_pdf_fonts.sh .build/DS-DKR-02_v1.0.0.pdf
+          python scripts/check_pdf_clearance.py .build/DS-DKR-02_v1.0.0.pdf --min-mm 20 --frame-inset-mm 5 --min-frame-gap-mm 14
+          pdftotext .build/DS-DKR-02_v1.0.0.pdf .build/extracted.txt
+          ! grep -q $'\uFFFD' .build/extracted.txt
+          sha256sum .build/DS-DKR-02_v1.0.0.pdf | tee .build/SHA256SUMS
+
+      - name: Upload exact candidate for mandatory full visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: dkr02-study-pdf-candidate
+          path: |
+            .build/DS-DKR-02_v1.0.0.pdf
+            .build/SHA256SUMS
+          retention-days: 14
+          if-no-files-found: error
+
+      - name: Commit reviewed source and layout fix; remove bootstrap payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'deep-study-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add -- subjects/docker/DKR.02/DKR.02.md assets/styles/deep-study-study-pdf.css
+          git rm -r -- .bootstrap/dkr02
+          git rm -- .github/workflows/bootstrap-dkr02-content.yml
+          git commit -m 'docs: materialize reviewed DKR.02 source and prompt-aligned layout'
+          git push origin HEAD:main
