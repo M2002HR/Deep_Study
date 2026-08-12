@@ -9,7 +9,9 @@
 1. `START_HERE.md`
 2. `CURRENT_STATE.md`
 
-بعد وضعیت واقعی GitHub، branch/PR، `DOCUMENT_REGISTRY.md` و manifestهای جدیدتر را verify کن. اگر state file قدیمی بود، آن را اصلاح کن.
+بعد وضعیت واقعی GitHub، branch پیش‌فرض، آخرین commit، `DOCUMENT_REGISTRY.md` و manifestهای جدیدتر را verify کن. اگر state file قدیمی بود، آن را اصلاح کن.
+
+branch اصلی پروژه `main` است. روش Git پروژه در `meta/standards/GIT_WORKFLOW.md` تعریف شده و برای همه agentها اجباری است.
 
 ## 1. قبل از هر کار محتوایی
 
@@ -21,10 +23,11 @@
 4. `SOURCE_POLICY.md`
 5. `RESEARCH_METHOD.md`
 6. `MASTERY.md`
-7. `meta/standards/MODULE_GRANULARITY.md` برای ساخت/تقسیم Study PDF
-8. `meta/prompts/MASTER_PDF_PROMPT.md` و `meta/prompts/PDF_GENERATION.md` برای هر کار PDF
-9. syllabus و Scope Contract مربوط به موضوع
-10. upstream/downstream documents موجود
+7. `meta/standards/GIT_WORKFLOW.md`
+8. `meta/standards/MODULE_GRANULARITY.md` برای ساخت/تقسیم Study PDF
+9. `meta/prompts/MASTER_PDF_PROMPT.md` و `meta/prompts/PDF_GENERATION.md` برای هر کار PDF
+10. syllabus و Scope Contract مربوط به موضوع
+11. upstream/downstream documents موجود
 
 برای ادامه مسیر موجود، `meta/CONTINUATION_PROTOCOL.md` را اجرا کن. برای حوزه کاملاً جدید، `meta/prompts/NEW_TOPIC_SYLLABUS.md` را اجرا کن.
 
@@ -74,11 +77,17 @@ PDF `canonical/published` فقط یعنی سند آماده مطالعه است.
 
 ## 8. Git discipline
 
-- تغییرات ساختاری/محتوایی در branch کار انجام شوند.
+- **حالت پیش‌فرض: تغییر مستقیم روی آخرین نسخه `main`.**
+- به‌صورت پیش‌فرض branch جدا یا Pull Request نساز.
+- branch/PR فقط وقتی ساخته شود که user در همان درخواست صریحاً بخواهد.
+- اگر direct write روی `main` به دلیل protection/permission ممکن نبود، خطا را گزارش کن و خودکار branch/PR نساز.
+- قبل از write آخرین نسخه و SHA فایل را از `main` بخوان تا تغییر جدیدی overwrite نشود.
 - binary generated artifacts کنار canonical source با version matching نگهداری شوند.
 - فایل font در repository commit نشود؛ font build dependency باید reproducible/pinned باشد.
 - کتاب تجاری commit نشود.
-- merge فقط با درخواست صریح user انجام شود.
+- force push و rewrite تاریخچه `main` پیش‌فرض ممنوع است.
+
+جزئیات کامل در `meta/standards/GIT_WORKFLOW.md` است.
 
 ## 9. Stop conditions
 
