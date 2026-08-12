@@ -3,7 +3,7 @@ name: Promote visually approved PDF
 on:
   push:
     branches:
-      - bootstrap/deep-study-foundation
+      - main
     paths:
       - 'curriculum/devops/docker/APPROVED_CANDIDATE.yml'
 
@@ -63,4 +63,4 @@ jobs:
           git add -- curriculum/devops/docker/artifacts/docker_mastery_syllabus_v1.1.0.pdf
           git diff --cached --quiet && exit 0
           git commit -m 'docs: promote visually approved Docker syllabus PDF'
-          git push
+          git push origin HEAD:main
