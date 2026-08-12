@@ -3,7 +3,7 @@ name: Validate PDF font assets
 on:
   push:
     branches:
-      - bootstrap/deep-study-foundation
+      - main
     paths:
       - '.github/workflows/font-assets.yml'
       - 'meta/standards/**'
