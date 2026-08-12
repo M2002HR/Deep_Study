@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-08-12 - DKR.02 v1.0.0 published
+
+- Published `DS-DKR-02 / DKR.02 - نصب، Editions، Platforms و Distribution v1.0.0` as a 42-page canonical Study PDF.
+- Reverified version-sensitive installation, API compatibility, contexts, rootless, remote access and Desktop/platform claims against official Docker sources with research cutoff `2026-08-12`.
+- Candidate pass 1 was rejected after full visual QA because of Latin automatic page counters, mixed-direction cover subtitle ordering and font fallback; source/CSS were fixed and the PDF was rebuilt from scratch.
+- Final exact candidate Run `31617684197` passed mechanical preflight and 42/42-page visual review at 180 DPI; cover, TOC, comparison table, labs/topology, evidence table, references and final page were checked at full size.
+- Final PDF SHA256: `109e9d47c69cdecc33ab5e70be8e13baf7a224edc8a172b88fe33a69cadb0ab6`.
+- Final font set is strictly embedded Vazirmatn Regular/Medium/Bold.
+- Updated shared Study PDF CSS so table cells are centered/middle-aligned per the preserved 64-rule checklist and automatic footer/TOC counters render with Persian digits.
+- `DKR.01` learner mastery remains `not assessed`; publication of DKR.02 does not advance learner progression.
+- Next authoring target after publication is `DKR.03`.
+
 ## 2026-08-12 - DKR.02 preparation and state hardening
 
 - Added `meta/standards/PROGRESSION_AND_PREREQUISITES.md` to separate authoring eligibility, publication, operational prerequisite readiness and learner mastery.
