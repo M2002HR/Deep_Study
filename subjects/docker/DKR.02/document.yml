@@ -1,0 +1,23 @@
+document_id: DS-DKR-02
+version: 1.0.0
+status: canonical-study
+research_cutoff: 2026-08-12
+track: DevOps / Docker
+cover_title: Docker DKR.02
+subtitle: نصب، Editions، Platforms و Distribution
+pdf_title: Docker DKR.02 - نصب، Editions، Platforms و Distribution - Deep Study
+depth: Core
+subject: دومین درس Core مسیر Docker Mastery؛ انتخاب، نصب، شناسایی نسخه و اتصال امن Docker CLI به daemon درست در Linux، macOS و Windows
+keywords:
+  - Docker
+  - Docker Engine
+  - Docker Desktop
+  - installation
+  - Docker contexts
+  - rootless
+  - Docker Engine API
+  - versioning
+  - containerd
+  - runc
+  - BuildKit
+cover_note: این سند دومین واحد Core مسیر Docker Mastery است. هدف آن ساختن توانایی واقعی برای انتخاب deployment مناسب، نصب قابل اتکا، تشخیص componentها و نسخه‌ها، و اتصال امن CLI به daemon درست است؛ نه صرفاً اجرای یک installer.
