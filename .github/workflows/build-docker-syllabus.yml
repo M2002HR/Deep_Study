@@ -3,7 +3,7 @@ name: Build Docker syllabus candidate
 on:
   push:
     branches:
-      - bootstrap/deep-study-foundation
+      - main
     paths:
       - 'curriculum/devops/docker/docker_mastery_syllabus_v1.1.0.md'
       - 'scripts/build_docker_syllabus_pdf.py'
