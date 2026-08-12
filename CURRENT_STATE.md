@@ -1,6 +1,6 @@
 # وضعیت فعلی Deep Study
 
-**آخرین به‌روزرسانی:** 2026-08-11
+**آخرین به‌روزرسانی:** 2026-08-12
 
 ## مسیر فعال
 
@@ -48,15 +48,18 @@
 ## وضعیت Git
 
 - Repository: `M2002HR/Deep_Study`
-- Working branch: `bootstrap/deep-study-foundation`
-- Bootstrap/working PR: `#1`
-- تا وقتی user صریحاً درخواست merge نکرده، PR را merge نکن.
+- branch پیش‌فرض و canonical: `main`
+- PR باز: ندارد؛ وضعیت واقعی در 2026-08-12 بررسی شد.
+- روش پیش‌فرض تغییرات: **نوشتن مستقیم روی `main`، بدون ساخت branch جدا و بدون Pull Request.**
+- branch/PR فقط با درخواست صریح user ساخته می‌شود.
+- policy کامل: `meta/standards/GIT_WORKFLOW.md`
 
 ## برای ادامه در یک چت تازه
 
 1. از `START_HERE.md` شروع کن.
-2. وضعیت واقعی GitHub، branch، PR، registry و آخرین artifact manifest را verify کن.
+2. وضعیت واقعی GitHub، `main`، registry و آخرین artifact manifest را verify کن.
 3. اگر هدف ادامه مطالعه است، ابتدا وضعیت mastery `DKR.01` را از user بپرس/بررسی کن؛ صرف publication اجازه عبور به `DKR.02` نیست.
 4. اگر user می‌خواهد سند بعدی را آماده کند، syllabus و dependencyها را بخوان و `meta/prompts/CONTINUE_EXISTING_TRACK.md` را اجرا کن.
 5. اگر موضوع جدیدی شروع می‌شود، `meta/prompts/NEW_TOPIC_SYLLABUS.md` را اجرا کن.
-6. بعد از هر publication یا تغییر mastery، این فایل را به‌روزرسانی کن.
+6. تغییرات عادی را مستقیم روی `main` ثبت کن؛ branch/PR نساز مگر user صریحاً بخواهد.
+7. بعد از هر publication یا تغییر mastery، این فایل را به‌روزرسانی کن.
