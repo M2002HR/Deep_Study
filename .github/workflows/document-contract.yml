@@ -3,7 +3,7 @@ name: Deep Study document contract
 on:
   push:
     branches:
-      - bootstrap/deep-study-foundation
+      - main
   pull_request:
   workflow_dispatch:
 
