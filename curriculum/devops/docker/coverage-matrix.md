@@ -10,7 +10,7 @@
 | META.DKR.02 | محیط آزمایش و ابزارهای مشاهده سیستم | Foundation | planned | required | selected | as-applicable | as-applicable | required | required-if-relevant | required | pending | planned |
 | META.DKR.03 | سیستم Coverage و Snapshot کامل Reference | Meta | planned | required | selected | as-applicable | as-applicable | required | required-if-relevant | required | pending | planned |
 | DKR.01 | تاریخچه و مدل ذهنی Container | Core | DS-DKR-01 v1.0.0 | required | selected | as-applicable | as-applicable | required | required-if-relevant | required | PASS 2026-08-11 | published-canonical |
-| DKR.02 | نصب، Editions، Platforms و Distribution | Core | planned | required | selected | as-applicable | as-applicable | required | required-if-relevant | required | pending | planned |
+| DKR.02 | نصب، Editions، Platforms و Distribution | Core | DS-DKR-02 v1.0.0 | required | selected | as-applicable | as-applicable | required | required-if-relevant | required | PASS 2026-08-12 | published-canonical |
 | DKR.03 | معماری Docker Engine: CLI -> API -> dockerd -> runtime stack | Core | planned | required | selected | as-applicable | as-applicable | required | required-if-relevant | required | pending | planned |
 | DKR.04 | Docker Object Model و Inspectability | Core | planned | required | selected | as-applicable | as-applicable | required | required-if-relevant | required | pending | planned |
 | DKR.05 | Container Lifecycle کامل | Core | planned | required | selected | as-applicable | as-applicable | required | required-if-relevant | required | pending | planned |
