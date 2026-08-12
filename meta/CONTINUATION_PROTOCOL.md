@@ -7,7 +7,8 @@
 قبل از هر تصمیم:
 
 - `START_HERE.md` و `CURRENT_STATE.md` را بخوان؛
-- وضعیت واقعی GitHub، branch، PR و آخرین commit را بررسی کن؛
+- وضعیت واقعی GitHub، branch پیش‌فرض `main` و آخرین commit را بررسی کن؛
+- `meta/standards/GIT_WORKFLOW.md` را بخوان؛
 - `DOCUMENT_REGISTRY.md` را بخوان؛
 - syllabus مسیر فعال و آخرین artifact manifest/QA report را بخوان؛
 - اگر `CURRENT_STATE.md` با GitHub اختلاف داشت، GitHub و manifestهای جدیدتر را مبنا بگیر و state file را اصلاح کن.
@@ -63,6 +64,12 @@
 - PDF artifact و source دقیقاً version-matched باشند؛
 - publication status را با learner mastery قاطی نکن.
 
+### روش Git در publication
+
+- پیش‌فرض: همه تغییرات تأییدشده را مستقیم روی آخرین `main` ثبت کن.
+- branch جدا و Pull Request نساز مگر user صریحاً درخواست کند.
+- اگر GitHub direct write روی `main` را نپذیرفت، توقف کن و خطا را گزارش بده؛ خودکار مسیر PR را جایگزین نکن.
+
 ## 8. Handoff
 
 در پایان هر کار، repository باید آن‌قدر state داشته باشد که agent بعدی بدون context چت بتواند بگوید:
@@ -73,3 +80,4 @@
 - learner از کجا باید شروع/ادامه دهد؟
 - درس بعدی چیست؟
 - چه source baseline و QA contractی باید حفظ شود؟
+- تغییر بعدی باید روی کدام branch ثبت شود؟ پاسخ پیش‌فرض: `main`.
