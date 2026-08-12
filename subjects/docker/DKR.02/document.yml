@@ -4,7 +4,7 @@ status: canonical-study
 research_cutoff: 2026-08-12
 track: DevOps / Docker
 cover_title: Docker DKR.02
-subtitle: نصب، Editions، Platforms و Distribution
+subtitle: نصب Docker، نسخه‌ها، پلتفرم‌ها و روش‌های توزیع
 pdf_title: Docker DKR.02 - نصب، Editions، Platforms و Distribution - Deep Study
 depth: Core
 subject: دومین درس Core مسیر Docker Mastery؛ انتخاب، نصب، شناسایی نسخه و اتصال امن Docker CLI به daemon درست در Linux، macOS و Windows

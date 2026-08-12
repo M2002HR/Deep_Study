@@ -22,7 +22,7 @@
   size: A4;
   margin: 22mm 22mm 24mm 22mm;
   @bottom-center {
-    content: "صفحه " counter(page, persian-decimal) " از " counter(pages, persian-decimal);
+    content: "صفحه " counter(page, persian) " از " counter(pages, persian);
     font-family: Vazirmatn;
     font-size: 8pt;
     color: #637083;
@@ -103,7 +103,7 @@ a.toc-level1 { font-weight:700; color:#204d76; margin-top:2.4mm; }
 a.toc-level2 { padding-right:5mm; font-size:8.7pt; }
 .toc-entry-title { flex:0 1 auto; text-align:right; }
 .toc-dots { flex:1 1 auto; min-width:5mm; margin:0 1.8mm 1.4mm; border-bottom:.55pt dotted #9aa7b4; }
-a.toc-row::after { content: target-counter(attr(href), page, persian-decimal); flex:0 0 auto; min-width:7mm; text-align:left; color:#5c6a79; font-weight:400; direction:rtl; }
+a.toc-row::after { content: target-counter(attr(href), page, persian); flex:0 0 auto; min-width:7mm; text-align:left; color:#5c6a79; font-weight:400; direction:rtl; }
 section.level1 { page-break-before: auto; }
 section.level1:first-of-type { page-break-before: auto; }
 .callout, .definition, .exercise, .warning, .checkpoint {

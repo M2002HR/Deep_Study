@@ -96,7 +96,7 @@
 - BuildKit: engine/build backend که نسخه‌اش می‌تواند با packaging و deployment متفاوت باشد.
 
 <div class="definition">
-<strong>مدل ذهنی نصب:</strong> نصب Docker یعنی انتخاب یک <em>deployment shape</em> و یک <em>distribution mechanism</em> برای چند component؛ نه صرفاً قرار دادن binary به نام <code>docker</code> در PATH.
+<strong>مدل ذهنی نصب:</strong> نصب Docker یعنی انتخاب یک <strong>deployment shape</strong> و یک <strong>distribution mechanism</strong> برای چند component؛ نه صرفاً قرار دادن binary به نام <code>docker</code> در PATH.
 </div>
 
 ## ۱.۱ client-only هم ممکن است
@@ -898,8 +898,8 @@ sudo docker run --rm hello-world
 
 ```text
 Client machine
-  ├─ context default -> local/default daemon
-  └─ context lab-remote -> SSH -> Linux VM remote -> Docker Engine
+  |- context default -> local/default daemon
+  `- context lab-remote -> SSH -> Linux VM remote -> Docker Engine
 ```
 
 اگر فقط یک VM داری، host اصلی می‌تواند client باشد و VM daemon remote. لازم نیست daemon TCP باز کنی.
