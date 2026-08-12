@@ -93,7 +93,7 @@ hr { border: 0; border-top: .6pt solid #d7dee7; margin: 5mm 0; }
 table { width: 100%; border-collapse: collapse; margin: 4mm 0 5mm; font-size: 8.45pt; page-break-inside: auto; }
 thead { display: table-header-group; }
 tr { page-break-inside: avoid; }
-th, td { border: .55pt solid #c8d2dd; padding: 2mm 1.8mm; text-align: right; vertical-align: top; overflow-wrap: anywhere; }
+th, td { border: .55pt solid #c8d2dd; padding: 2mm 1.8mm; text-align: center; vertical-align: middle; overflow-wrap: anywhere; }
 th { background: #eaf0f6; color: #244561; font-weight: 700; }
 .toc-block { page-break-before:auto; page-break-after:always; direction:rtl; padding-top:2mm; }
 .toc-block .toc-title { page-break-before:auto; border-bottom:1pt solid #b7c7d8; padding-bottom:2mm; margin-bottom:4mm; }
