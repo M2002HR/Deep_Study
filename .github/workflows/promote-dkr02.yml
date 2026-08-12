@@ -1,0 +1,19 @@
+name: Promote approved DKR.02 study PDF
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'subjects/docker/DKR.02/APPROVED_CANDIDATE.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  promote:
+    uses: ./.github/workflows/reusable-promote-study-pdf.yml
+    with:
+      approval_file: subjects/docker/DKR.02/APPROVED_CANDIDATE.yml
