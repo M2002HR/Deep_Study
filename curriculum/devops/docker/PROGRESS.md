@@ -5,11 +5,18 @@
 | ID | Document | Authoring | Publication | Prerequisite readiness | Learner mastery | Next dependency |
 |---|---|---|---|---|---|---|
 | DKR.01 | DS-DKR-01 - تاریخچه و مدل ذهنی کانتینر | complete | published-canonical / v1.0.0 / 37 pages | not-applicable | not assessed | learner: DKR.02 after DKR.01 mastery gate |
-| DKR.02 | DS-DKR-02 - نصب، Editions، Platforms و Distribution | **eligible / next-to-author** | planned | `META.DKR.02`: evidence-required before practical Lab | not-started | DKR.03 after required mastery gates |
+| DKR.02 | DS-DKR-02 - نصب، Editions، Platforms و Distribution | complete | published-canonical / v1.0.0 / 42 pages | `META.DKR.02`: evidence-required before practical Lab | not-started | learner: DKR.03 after required mastery gates |
+| DKR.03 | DS-DKR-03 - معماری Docker Engine: CLI -> API -> dockerd -> runtime stack | eligible / next-to-author | planned | to-be-derived-from-syllabus-at-authoring | not-started | downstream follows dependency graph |
 
 ## وضعیت فعلی learner
 
-مطالعه واقعی پروژه از `DKR.01` شروع شده است. PDF آن آماده است، اما هنوز evidence تسلط learner ثبت نشده است.
+مطالعه واقعی learner از `DKR.01` شروع شده است. PDFهای `DKR.01` و `DKR.02` هر دو canonical و آماده مطالعه‌اند، اما publication سند دوم **هیچ Mastery Gateی را دور نمی‌زند**.
+
+وضعیت فعلی evidence:
+
+- `DKR.01`: learner mastery = `not assessed`.
+- `DKR.02`: learner mastery = `not-started`.
+- `META.DKR.02` readiness برای Lab عملی DKR.02 = `pending / not yet recorded`.
 
 برای mastered شدن `DKR.01` حداقل این evidence لازم است:
 
@@ -22,15 +29,13 @@
 
 ## وضعیت authoring بعدی
 
-`DKR.02` از نظر **authoring** next eligible document است و می‌تواند قبل از mastered شدن `DKR.01` آماده و حتی منتشر شود. این کار فقط محتوا را برای آینده آماده می‌کند و learner mastery را تغییر نمی‌دهد.
+`DKR.02` اکنون کامل و `published-canonical` است. از نظر authoring، سند بعدی curriculum برابر `DKR.03` است؛ prerequisiteهای محتوایی آن (`DKR.01` و `DKR.02`) هر دو به‌صورت canonical موجودند. قبل از ساخت DKR.03 همچنان continuation protocol، granularity gate و research gate باید از نو اجرا شوند.
 
-Upstream canonical لازم برای authoring موجود است:
+## Readiness عملی META.DKR.02
 
-- `DKR.01` / `DS-DKR-01` = `published-canonical`.
+Prerequisite دوم syllabus برای `DKR.02` یک prerequisite عملی/محیطی مهم است. publication مستقل `META.DKR.02` شرط authoring DKR.02 نبود، اما readiness آن باید قبل از اجرای Lab واقعی DKR.02 evidence داشته باشد.
 
-Prerequisite دوم syllabus یعنی `META.DKR.02` برای `DKR.02` یک prerequisite عملی/محیطی مهم است. publication یک PDF مستقل برای `META.DKR.02` شرط authoring `DKR.02` نیست، اما readiness آن باید قبل از اجرای Lab واقعی `DKR.02` evidence داشته باشد.
-
-### Evidence حداقلی readiness برای META.DKR.02
+### Evidence حداقلی readiness
 
 قبل از Lab عملی DKR.02 ثبت شود:
 
@@ -40,8 +45,6 @@ Prerequisite دوم syllabus یعنی `META.DKR.02` برای `DKR.02` یک prere
 - ثبت نسخه‌های واقعی Docker Engine/CLI و در صورت وجود BuildKit/containerd/runc؛
 - دسترسی به ابزارهای پایه مورد نیاز module مانند `docker`, `curl`, `jq`, `systemctl` و ابزارهای inspection مرتبط؛
 - privileged/network experiments فقط در محیط disposable.
-
-وضعیت فعلی این evidence: **pending / not yet recorded**.
 
 ## قانون وضعیت
 
