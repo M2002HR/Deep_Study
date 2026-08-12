@@ -1,0 +1,131 @@
+name: Refine and rebuild DKR.02 candidate
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/refine-dkr02-candidate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refine-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Apply visual-QA source and layout fixes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+
+          source = Path('subjects/docker/DKR.02/DKR.02.md')
+          text = source.read_text(encoding='utf-8')
+          fixes = {
+            '<em>deployment shape</em> و یک <em>distribution mechanism</em>': '<strong>deployment shape</strong> و یک <strong>distribution mechanism</strong>',
+            '  ├─ context default -> local/default daemon': '  |- context default -> local/default daemon',
+            '  └─ context lab-remote -> SSH -> Linux VM remote -> Docker Engine': '  `- context lab-remote -> SSH -> Linux VM remote -> Docker Engine',
+          }
+          for old, new in fixes.items():
+              if old in text:
+                  text = text.replace(old, new)
+              elif new not in text:
+                  raise SystemExit(f'Expected DKR.02 source fragment not found: {old!r}')
+          source.write_text(text, encoding='utf-8')
+          expected = '7bde2f120b8f36f4ffbf8a1f1613e1a97300eea94bf419baf5273054938a94f5'
+          actual = hashlib.sha256(source.read_bytes()).hexdigest()
+          if actual != expected:
+              raise SystemExit(f'Refined DKR.02 source SHA mismatch: {actual} != {expected}')
+
+          manifest = Path('subjects/docker/DKR.02/document.yml')
+          m = manifest.read_text(encoding='utf-8')
+          old = 'subtitle: نصب، Editions، Platforms و Distribution'
+          new = 'subtitle: نصب Docker، نسخه‌ها، پلتفرم‌ها و روش‌های توزیع'
+          if old in m:
+              m = m.replace(old, new, 1)
+          elif new not in m:
+              raise SystemExit('Expected DKR.02 subtitle not found')
+          manifest.write_text(m, encoding='utf-8')
+
+          css = Path('assets/styles/deep-study-study-pdf.css')
+          c = css.read_text(encoding='utf-8')
+          c = c.replace('counter(page, persian-decimal)', 'counter(page, persian)')
+          c = c.replace('counter(pages, persian-decimal)', 'counter(pages, persian)')
+          c = c.replace('target-counter(attr(href), page, persian-decimal)', 'target-counter(attr(href), page, persian)')
+          if 'counter(page, persian-decimal)' in c or 'target-counter(attr(href), page, persian-decimal)' in c:
+              raise SystemExit('Persian automatic counter patch incomplete')
+          css.write_text(c, encoding='utf-8')
+          PY
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq pandoc poppler-utils fontconfig libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0
+
+      - name: Install pinned Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'weasyprint==68.0' 'beautifulsoup4==4.14.3' 'pypdf==5.9.0' 'PyYAML==6.0.2'
+
+      - name: Fetch and register pinned Vazirmatn v33.003
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .build/fonts "$HOME/.local/share/fonts/deep-study"
+          base='https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/ttf'
+          for f in Regular Medium Bold; do
+            curl --fail --location --retry 3 "$base/Vazirmatn-$f.ttf" -o ".build/fonts/Vazirmatn-$f.ttf"
+            cp ".build/fonts/Vazirmatn-$f.ttf" "$HOME/.local/share/fonts/deep-study/Vazirmatn-$f.ttf"
+          done
+          for f in .build/fonts/*.ttf; do fc-scan --format '%{family}\n' "$f" | grep -qi Vazirmatn; done
+          fc-cache -f "$HOME/.local/share/fonts/deep-study"
+          fc-match Vazirmatn | grep -qi Vazirmatn
+
+      - name: Build refined exact candidate
+        run: |
+          python scripts/build_study_pdf.py \
+            --source subjects/docker/DKR.02/DKR.02.md \
+            --manifest subjects/docker/DKR.02/document.yml \
+            --output .build/DS-DKR-02_v1.0.0.pdf \
+            --font-dir .build/fonts \
+            --style assets/styles/deep-study-study-pdf.css
+
+      - name: Mechanical preflight and strict font set
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(pdfinfo .build/DS-DKR-02_v1.0.0.pdf | awk '/^Pages:/ {print $2}')" -gt 0
+          ./scripts/check_pdf_fonts.sh .build/DS-DKR-02_v1.0.0.pdf
+          python scripts/check_pdf_clearance.py .build/DS-DKR-02_v1.0.0.pdf --min-mm 20 --frame-inset-mm 5 --min-frame-gap-mm 14
+          pdftotext .build/DS-DKR-02_v1.0.0.pdf .build/extracted.txt
+          ! grep -q $'\uFFFD' .build/extracted.txt
+          pdffonts .build/DS-DKR-02_v1.0.0.pdf | tail -n +3 | awk '{print $1}' | grep -v 'Vazirmatn' && { echo 'Unexpected non-Vazirmatn font found'; exit 1; } || true
+          sha256sum .build/DS-DKR-02_v1.0.0.pdf | tee .build/SHA256SUMS
+
+      - name: Upload refined candidate for full visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: dkr02-study-pdf-candidate
+          path: |
+            .build/DS-DKR-02_v1.0.0.pdf
+            .build/SHA256SUMS
+          retention-days: 14
+          if-no-files-found: error
+
+      - name: Commit fixes and remove one-shot workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'deep-study-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add -- subjects/docker/DKR.02/DKR.02.md subjects/docker/DKR.02/document.yml assets/styles/deep-study-study-pdf.css
+          git rm -- .github/workflows/refine-dkr02-candidate.yml
+          git commit -m 'docs: fix DKR.02 bidi, Persian counters, and font fallback'
+          git push origin HEAD:main
