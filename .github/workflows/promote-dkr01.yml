@@ -3,7 +3,7 @@ name: Promote approved DKR.01 study PDF
 on:
   push:
     branches:
-      - bootstrap/deep-study-foundation
+      - main
     paths:
       - 'subjects/docker/DKR.01/APPROVED_CANDIDATE.yml'
 
@@ -65,4 +65,4 @@ jobs:
           git add -- subjects/docker/DKR.01/artifacts/DS-DKR-01_v1.0.0.pdf
           git diff --cached --quiet && exit 0
           git commit -m 'docs: promote approved DKR.01 study PDF'
-          git push
+          git push origin HEAD:main
