@@ -9,9 +9,10 @@
 - `START_HERE.md` و `CURRENT_STATE.md` را بخوان؛
 - وضعیت واقعی GitHub، branch پیش‌فرض `main` و آخرین commit را بررسی کن؛
 - `meta/standards/GIT_WORKFLOW.md` را بخوان؛
+- `meta/standards/PROGRESSION_AND_PREREQUISITES.md` را بخوان؛
 - `DOCUMENT_REGISTRY.md` را بخوان؛
-- syllabus مسیر فعال و آخرین artifact manifest/QA report را بخوان؛
-- اگر `CURRENT_STATE.md` با GitHub اختلاف داشت، GitHub و manifestهای جدیدتر را مبنا بگیر و state file را اصلاح کن.
+- syllabus مسیر فعال، coverage matrix، progress و آخرین artifact manifest/QA report را بخوان؛
+- اگر `CURRENT_STATE.md` یا coverage/progress با GitHub و manifestهای جدیدتر اختلاف داشت، stateهای قدیمی را اصلاح کن.
 
 ## 2. انتخاب قدم بعدی
 
@@ -26,6 +27,25 @@
 - Definition of Done
 
 را استخراج کن.
+
+سپس prerequisiteها را classify کن:
+
+- knowledge/mastery prerequisite؛
+- operational/environment prerequisite؛
+- document/source prerequisite.
+
+### اگر درخواست user ساخت PDF بعدی است
+
+- **authoring eligibility** را بررسی کن.
+- pending بودن learner mastery به‌تنهایی authoring downstream را block نمی‌کند.
+- upstream documentهایی که برای consistency لازم‌اند باید canonical و قابل audit باشند.
+- prerequisiteهای مطالعه/Lab باید در Scope Contract downstream حفظ شوند.
+
+### اگر درخواست user شروع/ادامه مطالعه است
+
+- learner mastery prerequisiteها را بررسی کن؛
+- readiness عملی/محیطی Lab را بررسی کن؛
+- صرف publication PDF اجازه عبور مطالعاتی نیست.
 
 ## 3. Granularity gate
 
@@ -44,6 +64,7 @@
 - متن فارسی ساده باشد.
 - اصطلاحات repo را از `TERMINOLOGY.md` رعایت کن.
 - overlap با owner documentهای قبلی intentional و کوتاه باشد.
+- Scope Contract باید prerequisiteهای study-time و authoring-time را مبهم نگذارد.
 
 ## 6. Build and QA
 
@@ -59,10 +80,12 @@
 در publication:
 
 - `DOCUMENT_REGISTRY.md` را به‌روزرسانی کن؛
+- coverage matrix همان track را sync کن؛
 - artifact manifest و QA report ثبت کن؛
 - `CURRENT_STATE.md` و progress مسیر را به‌روزرسانی کن؛
 - PDF artifact و source دقیقاً version-matched باشند؛
-- publication status را با learner mastery قاطی نکن.
+- publication status را با learner mastery یا prerequisite readiness قاطی نکن.
+- CI عمومی published study docs باید سند جدید را از روی registry/manifest validate کند.
 
 ### روش Git در publication
 
@@ -77,7 +100,9 @@
 - چه چیزهایی canonical هستند؟
 - چه چیزی فقط draft/candidate است؟
 - آخرین درس منتشرشده چیست؟
+- next authoring target چیست؟
 - learner از کجا باید شروع/ادامه دهد؟
-- درس بعدی چیست؟
+- learner mastery کدام prerequisiteها pending است؟
+- کدام operational prerequisite readiness هنوز evidence می‌خواهد؟
 - چه source baseline و QA contractی باید حفظ شود؟
 - تغییر بعدی باید روی کدام branch ثبت شود؟ پاسخ پیش‌فرض: `main`.
