@@ -3,7 +3,7 @@ name: Build DKR.01 study PDF candidate
 on:
   push:
     branches:
-      - bootstrap/deep-study-foundation
+      - main
     paths:
       - 'subjects/docker/DKR.01/DKR.01.md'
       - 'subjects/docker/DKR.01/document.yml'
