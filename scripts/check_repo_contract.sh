@@ -11,6 +11,7 @@ required=(
   meta/prompts/CONTINUE_EXISTING_TRACK.md
   meta/prompts/NEW_TOPIC_SYLLABUS.md
   meta/prompts/source/REPORT_GENERATION_PROMPT_ORIGINAL.md
+  meta/standards/GIT_WORKFLOW.md
   meta/standards/PDF_STYLE_GUIDE.md
   meta/standards/PDF_PRODUCTION_WORKFLOW.md
   meta/standards/CROSS_DOCUMENT_CONSISTENCY.md
@@ -42,4 +43,8 @@ fi
 grep -q 'DS-DKR-01' "$root/DOCUMENT_REGISTRY.md"
 grep -q 'DKR.01' "$root/CURRENT_STATE.md"
 grep -q 'DKR.02' "$root/curriculum/devops/docker/PROGRESS.md"
+# Git workflow must remain explicit and recoverable in a fresh session.
+grep -q 'branch پیش‌فرض و canonical پروژه: `main`' "$root/meta/standards/GIT_WORKFLOW.md"
+grep -q 'branch جدا نساز' "$root/meta/standards/GIT_WORKFLOW.md"
+grep -q 'Pull Request نساز' "$root/meta/standards/GIT_WORKFLOW.md"
 echo 'Deep Study repository contract: PASS'
