@@ -24,10 +24,11 @@ branch اصلی پروژه `main` است. روش Git پروژه در `meta/stand
 5. `RESEARCH_METHOD.md`
 6. `MASTERY.md`
 7. `meta/standards/GIT_WORKFLOW.md`
-8. `meta/standards/MODULE_GRANULARITY.md` برای ساخت/تقسیم Study PDF
-9. `meta/prompts/MASTER_PDF_PROMPT.md` و `meta/prompts/PDF_GENERATION.md` برای هر کار PDF
-10. syllabus و Scope Contract مربوط به موضوع
-11. upstream/downstream documents موجود
+8. `meta/standards/PROGRESSION_AND_PREREQUISITES.md`
+9. `meta/standards/MODULE_GRANULARITY.md` برای ساخت/تقسیم Study PDF
+10. `meta/prompts/MASTER_PDF_PROMPT.md` و `meta/prompts/PDF_GENERATION.md` برای هر کار PDF
+11. syllabus و Scope Contract مربوط به موضوع
+12. upstream/downstream documents موجود
 
 برای ادامه مسیر موجود، `meta/CONTINUATION_PROTOCOL.md` را اجرا کن. برای حوزه کاملاً جدید، `meta/prompts/NEW_TOPIC_SYLLABUS.md` را اجرا کن.
 
@@ -71,9 +72,15 @@ Markdown/structured source canonical است. PDF artifact از روی آن سا�
 - نسخه‌ها و research cutoff را sync کن؛
 - اگر تغییر upstream downstream را affected می‌کند، impact list ثبت کن.
 
-## 7. Publication با Mastery فرق دارد
+## 7. Publication، prerequisite readiness و Mastery سه چیز متفاوت‌اند
 
 PDF `canonical/published` فقط یعنی سند آماده مطالعه است. learner را فقط بعد از انجام Lab، teach-back و Mastery Checklist همان module، mastered علامت بزن.
+
+علاوه بر این، operational/environment prerequisiteها ممکن است readiness evidence جدا داشته باشند. publication یک PDF downstream، readiness محیط یا mastery learner را اثبات نمی‌کند.
+
+وقتی user می‌گوید «PDF بعدی را بساز»، agent باید **authoring eligibility** را از dependency graph بررسی کند؛ pending بودن learner mastery به‌خودی‌خود authoring را block نمی‌کند. وقتی user می‌گوید «درس بعدی را شروع کنم»، mastery prerequisite و readiness عملی باید جدا بررسی شوند.
+
+مرجع کامل: `meta/standards/PROGRESSION_AND_PREREQUISITES.md`.
 
 ## 8. Git discipline
 
@@ -89,6 +96,19 @@ PDF `canonical/published` فقط یعنی سند آماده مطالعه است.
 
 جزئیات کامل در `meta/standards/GIT_WORKFLOW.md` است.
 
-## 9. Stop conditions
+## 9. Publication synchronization
+
+بعد از publication هر Study PDF، حداقل این‌ها باید با هم sync شوند:
+
+- `DOCUMENT_REGISTRY.md`
+- coverage matrix همان track
+- progress همان track
+- `CURRENT_STATE.md`
+- document/artifact manifest
+- QA report
+
+CI باید همه‌ی `published-canonical` Study PDFها را از registry/manifest validate کند؛ contract نباید فقط نام آخرین module را hard-code کند.
+
+## 10. Stop conditions
 
 اگر یک factual gap با sourceهای available قابل verify نیست، آن را `Unresolved` علامت بزن؛ حدس را به‌عنوان fact وارد سند نکن.
